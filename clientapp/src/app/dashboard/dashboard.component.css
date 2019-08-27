@@ -1,8 +1,8 @@
 .main-header {
-    background:#c6d4e3;
+    background:#fafbfb;
     padding: 10px;
-    margin-bottom: 5px;
-}
+    border-bottom: 1px solid #e2f4fe;
+ }
 
 
 ul.user-info {
@@ -15,7 +15,7 @@ ul.user-info li {
     list-style: none;
     display: inline-block;
     padding: 10px;
-    border-right: 1px solid #d6e0f3;
+    border-right: 1px solid #ededed;
 }
 
 ul.user-info li:last-child {
@@ -23,32 +23,40 @@ ul.user-info li:last-child {
 }
 
 .sidebar {
-    background: #c6d4e3;
+    background: #fafbfb;
 }
 
 .sidebar-links {
-    padding:10px;
-}
-
-.sidebar-links {
-    padding:10px;
+    padding:10px 0;
 }
 
 .sidebar-links ul li {
-    padding: 5px;
+
 }
 
 .sidebar-links ul li a {
-    padding: 5px;
+    padding: 8px 10px;
     display: block;
     border-bottom: 1px solid #dadada;
+    color:#333333;
+    transition:all .2s ease-in;
+}
+
+.sidebar-links ul li a:hover {
+    background: #e0ecef;
+    color: #124280;
+}
+
+.sidebar-links ul li a i {
+    margin-right: 4px;
 }
 
 .main-page {
-    padding: 10px;
+    padding: 30px;
 }
 
 .main-heading {
     border-bottom: 1px solid #dadada;
     width: 100%;
+    padding-bottom: 5px;
 }
