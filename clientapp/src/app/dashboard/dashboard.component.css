@@ -24,6 +24,7 @@ ul.user-info li:last-child {
 
 .sidebar {
     background: #fafbfb;
+    min-height: calc(100vh - 64px);
 }
 
 .sidebar-links {
@@ -60,3 +61,4 @@ ul.user-info li:last-child {
     width: 100%;
     padding-bottom: 5px;
 }
+
