@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,15 @@ export class DataService {
         }
      })
   }
+
   
-  constructor() { }
+  constructor(private all:HttpClient) { }
+
+  // Roles Section Start
+  rolesRegister():any {
+
+  }
+  // Roles Section end
+
+
 }

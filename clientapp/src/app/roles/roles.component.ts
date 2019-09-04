@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { creatingRole } from '../model/roles';
 
 @Component({
   selector: 'app-roles',
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-
-  constructor() { }
+  createRole = new creatingRole;
+  roleName;
+  roleDesc;
+  roleSubmit;
+  constructor(private roles:DataService) { }
 
   ngOnInit() {
   }
+  registerRole() {
+    //console.log(this.roleName);
+    // this.roles.rolesRegister(this.createRole).subscribe(
+    //   (newRole) => {
+    //     this.roleSubmit = newRole;
+    //   } 
+    // )
+  }
+  
 
 }

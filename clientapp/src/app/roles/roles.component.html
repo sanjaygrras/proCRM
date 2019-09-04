@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Rone NAme</th>
+                    <th>Role Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,19 +24,19 @@
     <div class="row mb-2">
         <div class="col-sm-3">Role Name</div>
         <div class="col-sm-9">
-            <input class="form-control" type="text" name="rolename" [(ngModel)]="roleName">
+            <input class="form-control" type="text" name="rolename" [(ngModel)]="createRole.roleName">
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Role Description</div>
         <div class="col-sm-9">
-            <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="roleDesc"></textarea>
+            <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="createRole.roleDesc"></textarea>
         </div>
     </div>    
     <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-9">
-                <button class="btn btn-success">Submit</button>
+                <button class="btn btn-success" (click)="registerRole()">Submit</button>
             </div>
     </div>
 </form>
