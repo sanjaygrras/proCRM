@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentComponent } from './student/student.component';
+import { CourseComponent } from './course/course.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { StudentComponent } from './student/student.component';
     LoginComponent,
     DashboardComponent,
     StudentComponent,
+    CourseComponent,
   ],
   imports: [
     BrowserModule,
