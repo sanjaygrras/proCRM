@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
+import { RolesComponent } from './roles/roles.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CourseComponent } from './course/course.component';
     DashboardComponent,
     StudentComponent,
     CourseComponent,
+    RolesComponent,
   ],
   imports: [
     BrowserModule,
