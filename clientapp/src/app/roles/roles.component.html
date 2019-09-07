@@ -4,14 +4,15 @@
         <table class="table table-border">
             <thead>
                 <tr>
-                    <th>No</th>
                     <th>Role Name</th>
+                    <th>Role Description</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Admin</td>
+                <tr *ngFor="let data of roles; index as i">
+                    <td>{{data.roleName}}</td>
+                    <td>{{data.roleDesc}}</td>
+                    <td><button (click)="roleDelete(i)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -20,17 +21,17 @@
 
 <H3>Add Role</H3>
 <hr>
-<form #roles="ngForm">
+<form #role="ngForm">
     <div class="row mb-2">
         <div class="col-sm-3">Role Name</div>
         <div class="col-sm-9">
-            <input class="form-control" type="text" name="rolename" [(ngModel)]="createRole.roleName">
+            <input class="form-control" type="text" name="rolename" [(ngModel)]="roleName">
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-sm-3">Role Description</div>
         <div class="col-sm-9">
-            <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="createRole.roleDesc"></textarea>
+            <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="roleDesc"></textarea>
         </div>
     </div>    
     <div class="row">

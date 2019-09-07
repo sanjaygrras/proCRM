@@ -15,4 +15,20 @@ export class BackendService {
   postcourses(data){
     return this.http.post('http://localhost:3000/send-courses', data);
   }
+
+  getroles(){
+    console.log("Backend Hit");
+    return this.http.get('http://localhost:3000/get-roles');
+    
+  }
+
+  postroles(data){
+    console.log("Backend Hit");
+    return this.http.post('http://localhost:3000/post-roles', data); 
+  }
+
+  deleterole(index){
+    let i ={ind:index};
+    return this.http.post('http://localhost:3000/delete-roles',i);
+  }
 }

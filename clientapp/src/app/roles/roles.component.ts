@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { creatingRole } from '../model/roles';
+import { BackendService } from '../backend.service';
 
 @Component({
   selector: 'app-roles',
@@ -8,13 +8,19 @@ import { creatingRole } from '../model/roles';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  createRole = new creatingRole;
+  
+  roles;
   roleName;
   roleDesc;
-  roleSubmit;
-  constructor(private roles:DataService) { }
+  
+  constructor(private _backend:BackendService) { }
 
   ngOnInit() {
+    this._backend.getroles().subscribe((d)=>{
+      this.roles=d;
+    })
+    console.log(this.roles);
+    console.log("init");
   }
 
   registerRole() {
@@ -23,5 +29,19 @@ export class RolesComponent implements OnInit {
     // });
   }
 
+
+
+    let data={roleName:this.roleName, roleDesc:this.roleDesc};
+    this._backend.postroles(data).subscribe((d)=>{
+      console.log(d);
+    })
+    console.log(this.roles);
+  }
+  
+  roleDelete(i){
+    this._backend.deleterole(i).subscribe((d)=>{
+      console.log(d);
+    })
+  }
 
 }

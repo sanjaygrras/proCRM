@@ -60,9 +60,27 @@ app.get('/back-courses', (req,res)=>{
     res.send(courses);
 })
 app.post('/send-courses', bodyParser.json(),(req,res)=>{
-    let temp= req.body;
-    courses.push(temp);
+    courses.push(req.body);
 })
+
+let roles=[{roleName:"Admin", roleDesc:"Admin"}];
+let dele;
+app.post('/post-roles', bodyParser.json(), (req,res)=>{
+    console.log("Express Hit");
+    roles.push(req.body);
+})
+
+app.get('/get-roles', (req,res)=>{
+    console.log("Express Hit");
+    res.send(roles);
+})
+
+app.post('/delete-roles', bodyParser.json(), (req,res)=>{
+    console.log(req.body);
+    dele=req.body;
+    del=dele.ind;
+    roles.splice(del,1);
+});
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");
