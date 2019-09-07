@@ -16,14 +16,12 @@ export class RolesComponent implements OnInit {
 
   ngOnInit() {
   }
+
   registerRole() {
-    //console.log(this.roleName);
-    // this.roles.rolesRegister(this.createRole).subscribe(
-    //   (newRole) => {
+    // this.roles.rolesRegister(this.createRole).subscribe((newRole) => {
     //     this.roleSubmit = newRole;
-    //   } 
-    // )
+    // });
   }
-  
+
 
 }
