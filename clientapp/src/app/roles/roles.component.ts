@@ -24,20 +24,13 @@ export class RolesComponent implements OnInit {
   }
 
   registerRole() {
-    // this.roles.rolesRegister(this.createRole).subscribe((newRole) => {
-    //     this.roleSubmit = newRole;
-    // });
-  }
-
-
-
-    let data={roleName:this.roleName, roleDesc:this.roleDesc};
+    let data ={ roleName:this.roleName, roleDesc:this.roleDesc};
     this._backend.postroles(data).subscribe((d)=>{
       console.log(d);
     })
     console.log(this.roles);
   }
-  
+
   roleDelete(i){
     this._backend.deleterole(i).subscribe((d)=>{
       console.log(d);
