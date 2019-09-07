@@ -8,7 +8,7 @@ import { BackendService } from '../backend.service';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  
+
   roles;
   roleName;
   roleDesc;

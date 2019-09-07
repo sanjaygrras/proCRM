@@ -4,15 +4,15 @@ const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 
 const mongoClient = mongo.MongoClient;
-// let client = new mongoClient('mongodb://localhost:27017/proCRM', {useNewUrlParser: true});
-// let connection;
+let client = new mongoClient('mongodb://localhost:27017/proCRM', {useNewUrlParser: true});
+let connection;
 
-// client.connect((err,db)=>{
-//     if(err){
-//         console.log('Something went wrong');
-//     }
-//     connection = db;
-// })
+client.connect((err,db)=>{
+    if(err){
+        console.log('Something went wrong');
+    }
+    connection = db;
+})
 
 const app= express();
 app.use(cors()); // Allow multi domain access to express server
@@ -60,32 +60,23 @@ app.get('/back-courses', (req,res)=>{
     res.send(courses);
 })
 app.post('/send-courses', bodyParser.json(),(req,res)=>{
-    courses.push(req.body);
+    let temp= req.body;
+    courses.push(temp);
 })
-
-let roles=[{roleName:"Admin", roleDesc:"Admin"}];
-let dele;
-app.post('/post-roles', bodyParser.json(), (req,res)=>{
-    console.log("Express Hit");
-    roles.push(req.body);
-})
-
-app.get('/get-roles', (req,res)=>{
-    console.log("Express Hit");
-    res.send(roles);
-})
-
-app.post('/delete-roles', bodyParser.json(), (req,res)=>{
-    console.log(req.body);
-    dele=req.body;
-    del=dele.ind;
-    roles.splice(del,1);
-});
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");
 });
 
-// app.post('dashboard/roles',bodyParser.json(),(req,res)={
-//     console.log(req.body);
-// })
+app.post('/post-roles', bodyParser.json(), (req,res)=> {
+    console.log(req.body);
+    let r = connection.db('proCRM').collection('roles');
+
+    r.insert(req.body, (err,abc) => {
+        if(!err) {
+            console.log('insrted');
+        } else {
+            console.log('getting error');
+        }
+    })
+});
