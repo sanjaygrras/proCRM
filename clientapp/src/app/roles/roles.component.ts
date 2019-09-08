@@ -16,11 +16,15 @@ export class RolesComponent implements OnInit {
   constructor(private _backend:BackendService) { }
 
   ngOnInit() {
+
+  }
+
+  refresh(){
     this._backend.getroles().subscribe((d)=>{
       this.roles=d;
+      console.log(d);
     })
     console.log(this.roles);
-    console.log("init");
   }
 
   registerRole() {
@@ -32,7 +36,8 @@ export class RolesComponent implements OnInit {
   }
 
   roleDelete(i){
-    this._backend.deleterole(i).subscribe((d)=>{
+    console.log(i);
+    this._backend.deleterole({'id': i}).subscribe((d)=>{
       console.log(d);
     })
   }

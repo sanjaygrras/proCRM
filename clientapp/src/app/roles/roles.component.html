@@ -1,6 +1,7 @@
 <div class="card mb-5">
     <div class="card-body">
         <h1>Default Role</h1>
+        <button (click)="refresh()">Refresh table</button>
         <table class="table table-border">
             <thead>
                 <tr>
@@ -9,10 +10,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of roles; index as i">
+                <tr *ngFor="let data of roles">
                     <td>{{data.roleName}}</td>
                     <td>{{data.roleDesc}}</td>
-                    <td><button (click)="roleDelete(i)">Delete</button></td>
+                    <td><button (click)="roleDelete(data._id)">Delete</button></td>
                 </tr>
             </tbody>
         </table>

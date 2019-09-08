@@ -27,8 +27,8 @@ export class BackendService {
     return this.http.post('http://localhost:3000/post-roles', data); 
   }
 
-  deleterole(index){
-    let i ={ind:index};
-    return this.http.post('http://localhost:3000/delete-roles',i);
+  deleterole(data){
+    console.log(data);
+    return this.http.post('http://localhost:3000/delete-roles',data);
   }
 }

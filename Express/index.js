@@ -44,7 +44,7 @@ app.use(cors()); // Allow multi domain access to express server
 
 // // Delete data requires ID of the object
 // app.post('/delete', bodyParser.json(), (req,res)=>{
-//     let id = { _id : new mongo.ObjectID(req.body.id) };
+// let id = { _id : new mongo.ObjectID(req.body.id) };
 //     console.log(id);
 //     let collection_instance = connection.db('proCRM').collection('student');
 //     collection_instance.deleteOne(id, (err, obj)=>{
@@ -64,19 +64,47 @@ app.post('/send-courses', bodyParser.json(),(req,res)=>{
     courses.push(temp);
 })
 
-app.listen(3000,()=>{
-    console.log("Server started at Port: 3000");
-});
+app.get('/get-roles', (req,res)=>{
+    let collection_instance = connection.db('proCRM').collection('roles');
+    collection_instance.find().toArray((err,docs)=>{
+        if(err)
+            console.log('something went wrong');
+        else    
+            res.send(docs);
+    })
+})
 
 app.post('/post-roles', bodyParser.json(), (req,res)=> {
-    console.log(req.body);
-    let r = connection.db('proCRM').collection('roles');
+    
+    let collection_instance = connection.db('proCRM').collection('roles');
 
-    r.insert(req.body, (err,abc) => {
-        if(!err) {
-            console.log('insrted');
-        } else {
-            console.log('getting error');
+    collection_instance.insert(req.body, (err,abc) => {
+        if(err) {
+            console.log('Something went wrong');
         }
+        else{
+            console.log(req.body);
+            console.log('Inserted');    
+        }    
     })
+});
+
+app.post('/delete-roles', bodyParser.json(), (req,res)=>{
+    let collection_instance = connection.db('proCRM').collection('roles');
+    console.log(req.body);
+    let id = { _id : new mongo.ObjectID(req.body.id)};
+    console.log(id);
+    collection_instance.deleteOne(id, (err,obj)=>{
+        if(err){
+            console.log('Something went wrong');
+        }
+        else{
+            console.log("Deleted");
+        }
+        
+    })
+})
+
+app.listen(3000,()=>{
+    console.log("Server started at Port: 3000");
 });
