@@ -56,14 +56,47 @@ app.use(cors()); // Allow multi domain access to express server
 // })
 
 let courses=[{title:"Mean Stack", prerequisite:"HTML,CSS,JS",description:"Something",duration:"3 Months",fee:"15000",brochure:"Something",keywords:"Web,Web Dev"}];
-app.get('/back-courses', (req,res)=>{
-    res.send(courses);
+app.get('/get-course', (req,res)=>{
+    let collection_instance = connection.db('proCRM').collection('courses');
+
+    collection_instance.find().toArray((err,docs)=>{
+        if(err)
+            console.log("Something went wrong");
+        else
+            res.send(docs);
+    })
 })
-app.post('/send-courses', bodyParser.json(),(req,res)=>{
-    let temp= req.body;
-    courses.push(temp);
+app.post('/post-course', bodyParser.json(),(req,res)=>{
+    
+    let collection_instance = connection.db('proCRM').collection('courses');
+
+    collection_instance.insert(req.body, (err, data)=>{
+        if(err){
+            console.log('Something went wrong');
+        }
+        else{
+            console.log(data);
+        }
+    })
 })
 
+app.post('/delete-course', bodyParser.json(), (req,res)=>{
+    
+    let collection_instance = connection.db('proCRM').collection('courses');
+    console.log(req.body);
+    let id = { _id : new mongo.ObjectID(req.body.id)};
+    console.log(id);
+    collection_instance.deleteOne(id, (err,obj)=>{
+        if(err){
+            console.log('Something went wrong');
+        }
+        else{
+            console.log("Deleted");
+        }
+        
+    })
+    
+})
 app.get('/get-roles', (req,res)=>{
     let collection_instance = connection.db('proCRM').collection('roles');
     collection_instance.find().toArray((err,docs)=>{
