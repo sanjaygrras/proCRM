@@ -8,12 +8,17 @@ export class BackendService {
 
   constructor(private http:HttpClient) { }
   
-  getcourses(){
-    return this.http.get('http://localhost:3000/back-courses');
+  getcourse(){
+    return this.http.get('http://localhost:3000/get-course');
   }
 
-  postcourses(data){
-    return this.http.post('http://localhost:3000/send-courses', data);
+  postcourse(data){
+    console.log('Backend Hit');
+    return this.http.post('http://localhost:3000/post-course', data);
+  }
+
+  deletecourse(data){
+    return this.http.post('http://localhost:3000/delete-course',data);
   }
 
   getroles(){
@@ -28,8 +33,8 @@ export class BackendService {
     return this.http.post('http://localhost:3000/post-roles', data); 
   }
 
-  deleterole(index){
-    let i ={ind:index};
-    return this.http.post('http://localhost:3000/delete-roles',i);
+  deleterole(data){
+    console.log(data);
+    return this.http.post('http://localhost:3000/delete-roles',data);
   }
 }
