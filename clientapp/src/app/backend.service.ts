@@ -22,7 +22,8 @@ export class BackendService {
     
   }
 
-  postroles(data){
+  postroles(data):any
+  {
     console.log("Backend Hit");
     return this.http.post('http://localhost:3000/post-roles', data); 
   }

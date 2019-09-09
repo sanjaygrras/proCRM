@@ -12,7 +12,7 @@ export class RolesComponent implements OnInit {
   roles;
   roleName;
   roleDesc;
-  
+  successInserted;
   constructor(private _backend:BackendService) { }
 
   ngOnInit() {
@@ -25,9 +25,13 @@ export class RolesComponent implements OnInit {
 
   registerRole() {
     let data ={ roleName:this.roleName, roleDesc:this.roleDesc};
-    this._backend.postroles(data).subscribe((d)=>{
+    this._backend.postroles(data).subscribe((d) => {
       console.log(d);
-    })
+      if(d.status == "ok") {
+        //this.successInserted = "New role successfully inserted";
+        alert("Successfully inserted");
+      }
+    });
     console.log(this.roles);
   }
 

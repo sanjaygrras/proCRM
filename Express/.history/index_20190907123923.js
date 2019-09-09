@@ -70,15 +70,4 @@ app.listen(3000,()=>{
 
 app.post('/post-roles', bodyParser.json(), (req,res)=> {
     console.log(req.body);
-    let r = connection.db('proCRM').collection('roles');
-
-    r.insert(req.body, (err,abc) => {
-        if(!err) {
-            console.log('insrted');
-            res.send({status:'ok'});
-        } else {
-            console.log('getting error');
-            res.send({status:'failed'});
-        }
-    })
 });

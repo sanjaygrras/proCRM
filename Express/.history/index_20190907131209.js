@@ -75,10 +75,8 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
     r.insert(req.body, (err,abc) => {
         if(!err) {
             console.log('insrted');
-            res.send({status:'ok'});
         } else {
             console.log('getting error');
-            res.send({status:'failed'});
         }
     })
 });

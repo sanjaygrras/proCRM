@@ -78,7 +78,6 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
             res.send({status:'ok'});
         } else {
             console.log('getting error');
-            res.send({status:'failed'});
         }
     })
 });

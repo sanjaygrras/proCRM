@@ -4,15 +4,15 @@ const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 
 const mongoClient = mongo.MongoClient;
-let client = new mongoClient('mongodb://localhost:27017/proCRM', {useNewUrlParser: true});
-let connection;
+// let client = new mongoClient('mongodb://localhost:27017/proCRM', {useNewUrlParser: true});
+// let connection;
 
-client.connect((err,db)=>{
-    if(err){
-        console.log('Something went wrong');
-    }
-    connection = db;
-})
+// client.connect((err,db)=>{
+//     if(err){
+//         console.log('Something went wrong');
+//     }
+//     connection = db;
+// })
 
 const app= express();
 app.use(cors()); // Allow multi domain access to express server
@@ -66,19 +66,4 @@ app.post('/send-courses', bodyParser.json(),(req,res)=>{
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");
-});
-
-app.post('/post-roles', bodyParser.json(), (req,res)=> {
-    console.log(req.body);
-    let r = connection.db('proCRM').collection('roles');
-
-    r.insert(req.body, (err,abc) => {
-        if(!err) {
-            console.log('insrted');
-            res.send({status:'ok'});
-        } else {
-            console.log('getting error');
-            res.send({status:'failed'});
-        }
-    })
 });
