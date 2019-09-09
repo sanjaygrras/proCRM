@@ -119,6 +119,10 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
             console.log('getting error');
             res.send({status:'failed'});
         }
+        else{
+            console.log(req.body);
+            console.log('Inserted');    
+        }    
     })
 });
 
