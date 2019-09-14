@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { element } from 'protractor';
+
 import { BackendService } from '../backend.service';
 import { DataService } from '../data.service';
 
@@ -14,9 +14,14 @@ export class ManagePermissionsComponent implements OnInit {
   allFeatures;
   f = {};
 
-  constructor(private ds: DataService) { }
+  constructor(private ds: DataService, private route:ActivatedRoute) { }
 
   ngOnInit() {
+
+    
+
+
+
     this.ds.getCRMFeatures().subscribe((d) => {
       alert('in line 21');
       alert(JSON.stringify(d.data));

@@ -17,7 +17,7 @@ const routes: Routes = [
     {path:"roles", component:RolesComponent},
     {path:"students", component:StudentComponent},
     {path:"course", component:CourseComponent},
-    {path:"managePermission", component:ManagePermissionsComponent},
+    {path:"managePermission/:role", component:ManagePermissionsComponent},
     
   ]}
 ];

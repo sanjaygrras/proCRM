@@ -1,19 +1,24 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Add Roles
+</button>
+
 <div class="card mb-5">
     <div class="card-body">
-        <h1>Default Role</h1>
         <button (click)="refresh()">Refresh table</button>
         <table class="table table-border">
             <thead>
                 <tr>
                     <th>Role Name</th>
                     <th>Role Description</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of roles">
-                    <td>{{data.roleName}}</td>
-                    <td>{{data.roleDesc}}</td>
-                    <td><button (click)="roleDelete(data._id)">Delete</button></td>
+                    <td>{{data.role}}</td>
+                    <td>{{data.desc}}</td>
+                    <td><button routerLink="/dashboard/managePermission/{{data.role}}" appActionButton actionTitle="MANAGE_ROLE_PERMISSION">Manage Permission</button>  <button (click)="roleDelete(data._id)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -45,3 +50,7 @@
             </div>
     </div>
 </form>
+
+
+
+

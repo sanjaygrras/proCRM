@@ -16,7 +16,10 @@ export class RolesComponent implements OnInit {
   constructor(private _backend:BackendService) { }
 
   ngOnInit() {
-
+     this._backend.getroles().subscribe((data)=>{
+       //alert(JSON.stringify(data));
+       this.roles= data;
+     })
   }
 
   refresh(){
@@ -28,7 +31,7 @@ export class RolesComponent implements OnInit {
   }
 
   registerRole() {
-    let data = { roleName:this.roleName, roleDesc:this.roleDesc};
+    let data = { role:this.roleName, desc:this.roleDesc};
     this._backend.postroles(data).subscribe((d) => {
       console.log(d);
       if(d.status == "ok") {
@@ -36,7 +39,13 @@ export class RolesComponent implements OnInit {
         alert("Successfully inserted");
       }
     });
-    console.log(this.roles);
+    
+    this._backend.getroles().subscribe((data)=>{
+      //alert(JSON.stringify(data));
+      this.roles= data;
+    })
+
+
   }
 
   roleDelete(i){
