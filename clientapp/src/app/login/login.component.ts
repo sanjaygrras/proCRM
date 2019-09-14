@@ -13,25 +13,26 @@ export class LoginComponent implements OnInit {
   failed;
   name;
   class;
-  constructor(private rou:Router, private arou:ActivatedRoute, private admin:DataService) { }
+  constructor(private rou:Router, private arou:ActivatedRoute, private admin: DataService) { }
 
   ngOnInit() {
   }
 
   getdata() {
-    var adi = this.admin.check(this.user, this.pass);
-
-    if(adi)
-    {
+   this.admin.check(this.user, this.pass).subscribe((adi) => {
+    if (adi) {
      localStorage.setItem('email', this.user);
+     alert(JSON.stringify(adi));
+     localStorage.setItem('role', adi.data[0].role );
      this.rou.navigate(['dashboard']);
     }
-    else
-    {
-      this.rou.navigate(['']);
+    else {
       this.failed = "Login details are wrong";
     }
 
+   });
+
+    
   }
 
 }

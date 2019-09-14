@@ -10,6 +10,9 @@ import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { ActionButtonDirective } from './action-button.directive';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
     CourseComponent,
     RolesComponent,
     WelcomeComponent,
+    ActionButtonDirective,
+    ManagePermissionsComponent,
+
   ],
   imports: [
     BrowserModule,
