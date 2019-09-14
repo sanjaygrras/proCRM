@@ -30,10 +30,10 @@
         <div class="">
             <div class="sidebar-links">
                 <ul class="list-unstyled">
-                    <li appActionButton actionTitle="ROLE_MASTER"> <a routerLink="roles"><i class="fa fa-briefcase" aria-hidden="true"></i> Role </a></li>
-                    <li appActionButton actionTitle="USER_MASTER"> <a routerLink="users"><i class="fa fa-briefcase" aria-hidden="true"></i> User </a></li>
-                    <li appActionButton actionTitle="STUDENT_MASTER"> <a routerLink="students"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students </a></li>
-                    <li appActionButton actionTitle="COURSE_MASTER"> <a routerLink="course"><i class="fa fa-book"></i> Courses</a></li>
+                    <li *ngIf="isAllowed('ROLE_MASTER')"> <a routerLink="roles"><i class="fa fa-briefcase" aria-hidden="true"></i> Role </a></li>
+                    <li *ngIf="isAllowed('USER_MASTER')"> <a routerLink="users"><i class="fa fa-briefcase" aria-hidden="true"></i> User </a></li>
+                    <li *ngIf="isAllowed('STUDENT_MASTER')"> <a routerLink="students"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Students </a></li>
+                    <li *ngIf="isAllowed('COURSE_MASTER')"> <a routerLink="course"><i class="fa fa-book"></i> Courses</a></li>
             </ul>
             </div>
         </div>

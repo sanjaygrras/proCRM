@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     if (adi) {
      localStorage.setItem('email', this.user);
      localStorage.setItem('role', adi.data[0].role );
-     this.avs.setRolePermission(adi.data[0].role);
+
      this.rou.navigate(['dashboard']);
     }  else {
       alert('Login Credentials are incorrect');

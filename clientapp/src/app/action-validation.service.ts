@@ -31,8 +31,9 @@ export class ActionValidationService {
   }
 
   setRolePermission(role) {
-    this.http.get<[]>('http://localhost:3000/getPermisions/' + role).subscribe((d) => {
-     this.loggedInUserPermissions = d;
+    this.http.get<any>('http://localhost:3000/getPermisions/' + role).subscribe((d) => {
+
+      this.loggedInUserPermissions = d.data[0].permissions;
     });
   }
 }
