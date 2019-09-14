@@ -1,11 +1,14 @@
+
+<h2>{{role}} Permissions Settings</h2>
+
 <form #mform="ngForm">
 
 <div *ngFor="let o of allFeatures" >
-   <h3>{{o.action_title}}  <input type="checkbox" name="o.action_title" [(ngModel)]= "f[o.action_title]" > </h3> 
+   <h4>{{o.action_title}}  <input type="checkbox" name="o.action_title" [(ngModel)]= "f[o.action_title]" > </h4> 
     <!-- {{o.action_title}}-{{f[o.action_title]}} -->
 
     <div *ngFor="let so of o.sub_options" >
-       <h4>{{so.action_title}} <input type="checkbox" name="{{so.action_title}}" [(ngModel)]= "f[so.action_title]" ></h4> 
+       <h6>{{so.action_title}} <input type="checkbox" name="{{so.action_title}}" [(ngModel)]= "f[so.action_title]" ></h6> 
     
         <!-- {{so.action_title}}-{{f[so.action_title]}} -->
     </div>

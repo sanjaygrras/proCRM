@@ -6,30 +6,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ActionValidationService {
 
-   loggedInUserPermissions: [ ];
+   loggedInUserPermissions;
 
   constructor(private http: HttpClient) {
-        this.setRolePermission(localStorage.getItem('role'));
+
    }
 
   checkRolePermission( actionTitle: string ) {
 
+    let isAllowed = false;
     if (localStorage.getItem('role') === 'Admin') {
-      return true;
+      isAllowed = true;
     } else if (this.loggedInUserPermissions.length === 0) {
-        return true;
+        return false;
 
     }    else {
 
-    //   let isAllowed = false;
-    //   this.loggedInUserPermissions.forEach((element) => {
-    //     if (element.action_title === actionTitle) {
-    //         isAllowed = element.isAllowed;
-    //     }
-    // });
-      return true;
+      isAllowed = this.loggedInUserPermissions[actionTitle];
 
   }
+    console.log( 'checking for' + actionTitle + 'for the role' + localStorage.getItem('role') + 'result- ' + isAllowed);
+    return isAllowed;
 
   }
 

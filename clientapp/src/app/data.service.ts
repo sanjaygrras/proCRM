@@ -24,8 +24,9 @@ return this.http.post(this.baseUrl + 'createRole', f);
     return this.http.get(this.baseUrl + 'getAllFeatures');
   }
 
-  updateRolePermission(f, role)  {
-    return this.http.post(this.baseUrl + 'updateRolePermission/' + role, f);
+  updateRolePermission(role,f )  {
+    alert('in service-- ' + role);
+    return this.http.post(this.baseUrl + 'updateRolePermissions/' + role, f);
   }
 
 

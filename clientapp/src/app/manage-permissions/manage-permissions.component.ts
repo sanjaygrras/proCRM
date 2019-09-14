@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BackendService } from '../backend.service';
 import { DataService } from '../data.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-permissions',
@@ -14,11 +15,15 @@ export class ManagePermissionsComponent implements OnInit {
   allFeatures;
   f = {};
 
-  constructor(private ds: DataService, private route:ActivatedRoute) { }
+  role: string;
+  constructor(private ds: DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    
+    this.route.paramMap.subscribe((d)=>{
+this.role = d.get('role');
+
+    });
 
 
 
@@ -39,8 +44,11 @@ export class ManagePermissionsComponent implements OnInit {
   }
 
   check() {
-    alert('in check');
-    console.log(this.f);
+    alert("in check");
+    
+    this.ds.updateRolePermission(this.role, this.f).subscribe((d)=>{
+      alert(JSON.stringify(d));
+    })
   }
 
 }

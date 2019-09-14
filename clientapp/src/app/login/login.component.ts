@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ActionValidationService } from '../action-validation.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   failed;
   name;
   class;
-  constructor(private rou:Router, private arou:ActivatedRoute, private admin: DataService) { }
+  constructor(private rou:Router, private arou:ActivatedRoute, private admin: DataService, private avs: ActionValidationService) { }
 
   ngOnInit() {
   }
@@ -22,17 +23,15 @@ export class LoginComponent implements OnInit {
    this.admin.check(this.user, this.pass).subscribe((adi) => {
     if (adi) {
      localStorage.setItem('email', this.user);
-     alert(JSON.stringify(adi));
      localStorage.setItem('role', adi.data[0].role );
+     this.avs.setRolePermission(adi.data[0].role);
      this.rou.navigate(['dashboard']);
-    }
-    else {
-      this.failed = "Login details are wrong";
+    }  else {
+      alert('Login Credentials are incorrect');
     }
 
    });
 
-    
   }
 
 }

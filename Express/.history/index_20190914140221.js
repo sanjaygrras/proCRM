@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 
 const mongoClient = mongo.MongoClient;
-// let client = new mongoClient('mongodb://localhost:27017/procrm', {useNewUrlParser: true});
-let client  = new mongoClient("mongodb+srv://sanjayrathore144:sanjayrathore144@cluster0-wtjik.mongodb.net/test?retryWrites=true&w=majority" , {useNewUrlParser:true});
+let client = new mongoClient('mongodb://localhost:27017/procrm', {useNewUrlParser: true});
+// let client  = new mongoClient("mongodb+srv://sanjayrathore144:sanjayrathore144@cluster0-wtjik.mongodb.net/test?retryWrites=true&w=majority" , {useNewUrlParser:true});
 
 let connection;
 
@@ -99,6 +99,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
     })
     
 })
+
 app.get('/get-roles', (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
     collection_instance.find().toArray((err,docs)=>{
@@ -170,7 +171,6 @@ app.get('/getAllFeatures', (req,res)=>{
     })
 
     app.post('/updateRolePermissions/:role', bodyParser.json(), (req,res)=>{
-        console.log("updating permission for ");
         console.log(req.params.role);
             let collection = connection.db('procrm').collection('roles');
             collection.update({role:req.params.role},{$set:{permissions:req.body}},(err,r)=>{

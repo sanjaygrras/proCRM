@@ -12,6 +12,7 @@ import { RolesComponent } from './roles/roles.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ActionButtonDirective } from './action-button.directive';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ManagePermissionsComponent } from './manage-permissions/manage-permissi
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
   ],
   providers: [],
