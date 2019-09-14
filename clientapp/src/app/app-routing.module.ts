@@ -7,11 +7,13 @@ import { AuthGuard } from './auth.guard';
 import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 const routes: Routes = [
   {path:"", component:LoginComponent},
   {path:"dashboard", component:DashboardComponent, canActivate:[AuthGuard], children:[
+    {path:"", component:WelcomeComponent},
     {path:"roles", component:RolesComponent},
     {path:"students", component:StudentComponent},
     {path:"course", component:CourseComponent},

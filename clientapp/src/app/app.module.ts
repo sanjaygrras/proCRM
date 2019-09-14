@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RolesComponent } from './roles/roles.component';
     StudentComponent,
     CourseComponent,
     RolesComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
