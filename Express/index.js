@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const mongo = require('mongodb');
 
 const mongoClient = mongo.MongoClient;
-let client = new mongoClient('mongodb://localhost:27017/proCRM', {useNewUrlParser: true});
+// let client = new mongoClient('mongodb://localhost:27017/procrm', {useNewUrlParser: true});
+let client  = new mongoClient("mongodb+srv://sanjayrathore144:sanjayrathore144@cluster0-wtjik.mongodb.net/test?retryWrites=true&w=majority" , {useNewUrlParser:true});
+
 let connection;
 
 client.connect((err,db)=>{
@@ -19,7 +21,7 @@ app.use(cors()); // Allow multi domain access to express server
 
 
 // app.get('/db', (req,res)=>{ // Send the entire collection of student info
-//     let collection_instance = connection.db('proCRM').collection('student');
+//     let collection_instance = connection.db('procrm').collection('student');
 //     collection_instance.find().toArray((err,docs)=>{
 //         if(!err)
 //             res.send(docs);
@@ -33,7 +35,7 @@ app.use(cors()); // Allow multi domain access to express server
 //     let course = req.body.course;
 //     let doc = {name, age, course};
 //     console.log(doc);
-//     let collection_instance = connection.db('proCRM').collection('student');
+//     let collection_instance = connection.db('procrm').collection('student');
 //     collection_instance.insertOne(doc, (err, records)=>{
 //         if(err){
 //             console.log("Something went wrong");
@@ -46,7 +48,7 @@ app.use(cors()); // Allow multi domain access to express server
 // app.post('/delete', bodyParser.json(), (req,res)=>{
 // let id = { _id : new mongo.ObjectID(req.body.id) };
 //     console.log(id);
-//     let collection_instance = connection.db('proCRM').collection('student');
+//     let collection_instance = connection.db('procrm').collection('student');
 //     collection_instance.deleteOne(id, (err, obj)=>{
 //         if(err){
 //             console.log("Something went wrong");
@@ -57,7 +59,7 @@ app.use(cors()); // Allow multi domain access to express server
 
 let courses=[{title:"Mean Stack", prerequisite:"HTML,CSS,JS",description:"Something",duration:"3 Months",fee:"15000",brochure:"Something",keywords:"Web,Web Dev"}];
 app.get('/get-course', (req,res)=>{
-    let collection_instance = connection.db('proCRM').collection('courses');
+    let collection_instance = connection.db('procrm').collection('courses');
 
     collection_instance.find().toArray((err,docs)=>{
         if(err)
@@ -68,7 +70,7 @@ app.get('/get-course', (req,res)=>{
 })
 app.post('/post-course', bodyParser.json(),(req,res)=>{
     
-    let collection_instance = connection.db('proCRM').collection('courses');
+    let collection_instance = connection.db('procrm').collection('courses');
 
     collection_instance.insert(req.body, (err, data)=>{
         if(err){
@@ -82,7 +84,7 @@ app.post('/post-course', bodyParser.json(),(req,res)=>{
 
 app.post('/delete-course', bodyParser.json(), (req,res)=>{
     
-    let collection_instance = connection.db('proCRM').collection('courses');
+    let collection_instance = connection.db('procrm').collection('courses');
     console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
     console.log(id);
@@ -98,7 +100,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
     
 })
 app.get('/get-roles', (req,res)=>{
-    let collection_instance = connection.db('proCRM').collection('roles');
+    let collection_instance = connection.db('procrm').collection('roles');
     collection_instance.find().toArray((err,docs)=>{
         if(err)
             console.log('something went wrong');
@@ -109,7 +111,7 @@ app.get('/get-roles', (req,res)=>{
 
 app.post('/post-roles', bodyParser.json(), (req,res)=> {
     
-    let collection_instance = connection.db('proCRM').collection('roles');
+    let collection_instance = connection.db('procrm').collection('roles');
 
     collection_instance.insert(req.body, (err,abc) => {
         if(!err) {
@@ -123,7 +125,7 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 });
 
 app.post('/delete-roles', bodyParser.json(), (req,res)=>{
-    let collection_instance = connection.db('proCRM').collection('roles');
+    let collection_instance = connection.db('procrm').collection('roles');
     console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
     console.log(id);
@@ -137,6 +139,101 @@ app.post('/delete-roles', bodyParser.json(), (req,res)=>{
         
     })
 })
+
+// by sanjay rathore till 187
+app.get('/getPermisions/:role', (req,res)=>{
+console.log(req.params.role);
+    let collection = connection.db('procrm').collection('roles');
+    collection.find({role:req.params.role}).toArray((err,docs)=>{
+        if(!err)
+        {
+            res.send({status:"ok", msg:"data fetched successfully", data:docs})
+        }
+        else{
+            res.send({status:"failed", msg:"some error occured", data:err})
+        }
+    })
+})
+
+app.get('/getAllFeatures', (req,res)=>{
+    console.log(req.params.role);
+        let collection = connection.db('procrm').collection('crm_features');
+        collection.find().toArray((err,docs)=>{
+            if(!err)
+            {
+                res.send({status:"ok", msg:"data fetched successfully", data:docs})
+            }
+            else{
+                res.send({status:"failed", msg:"some error occured", data:err})
+            }
+        })
+    })
+
+    app.post('/updateRolePermissions/:role', bodyParser.json(), (req,res)=>{
+        console.log(req.params.role);
+            let collection = connection.db('procrm').collection('roles');
+            collection.update({role:req.params.role},{$set:{permissions:req.body}},(err,r)=>{
+                if(!err && r)
+                {
+                    res.send({status:"ok", msg:"permissions updated successfully for"+req.params.role, data:r});
+                }
+                else{
+                    res.send({status:"failed", msg:"some error occured", data:err});
+                    
+                }
+            })
+
+        })
+    
+        app.post('/login', bodyParser.json(), (req,res)=>{
+                let collection = connection.db('procrm').collection('users');
+                collection.find({email:req.body.email, pass:req.body.pass}).toArray((err,docs)=>{
+                    if(!err && docs.length>0)
+                    {
+                        res.send({status:"ok", msg:"Login Succesfull", data:docs});
+                    }
+                    else{
+                        res.send({status:"failed", msg:"some error occured", data:err});
+                        
+                    }
+                })
+    
+            })
+
+    
+            app.post('/registerUser', bodyParser.json(), (req,res)=>{
+                
+                    let collection = connection.db('procrm').collection('users');
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"User Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
+        
+                })
+
+                app.post('/createRole', bodyParser.json(), (req,res)=>{
+                
+                    let collection = connection.db('procrm').collection('roles');
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"Role Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
+        
+                })
+
+
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");

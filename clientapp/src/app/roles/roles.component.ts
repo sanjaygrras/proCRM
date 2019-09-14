@@ -20,15 +20,15 @@ export class RolesComponent implements OnInit {
   }
 
   refresh(){
-    this._backend.getroles().subscribe((d)=>{
-      this.roles=d;
+    this._backend.getroles().subscribe((d) => {
+      this.roles = d;
       console.log(d);
     })
     console.log(this.roles);
   }
 
   registerRole() {
-    let data ={ roleName:this.roleName, roleDesc:this.roleDesc};
+    let data = { roleName:this.roleName, roleDesc:this.roleDesc};
     this._backend.postroles(data).subscribe((d) => {
       console.log(d);
       if(d.status == "ok") {

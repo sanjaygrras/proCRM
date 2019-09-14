@@ -7,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,8 @@ const routes: Routes = [
     {path:"roles", component:RolesComponent},
     {path:"students", component:StudentComponent},
     {path:"course", component:CourseComponent},
+    {path:"managePermission", component:ManagePermissionsComponent},
+    
   ]}
 ];
 

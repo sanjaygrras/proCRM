@@ -9,6 +9,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
+import { ActionButtonDirective } from './action-button.directive';
+import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { RolesComponent } from './roles/roles.component';
     StudentComponent,
     CourseComponent,
     RolesComponent,
+    ActionButtonDirective,
+    ManagePermissionsComponent,
   ],
   imports: [
     BrowserModule,
