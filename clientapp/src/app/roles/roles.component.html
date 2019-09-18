@@ -1,56 +1,66 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Add Roles
-</button>
-
+<div class="topbar-menu mb-3 text-right">
+    <button class="btn btn-primary mr-3" (click)="refresh()">Refresh table</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add Roles
+    </button>
+</div>
 <div class="card mb-5">
     <div class="card-body">
-        <button (click)="refresh()">Refresh table</button>
-        <table class="table table-border">
+        <h2 class="mb-3">Roles List</h2>
+        <table class="table table-border table-striped">
             <thead>
                 <tr>
                     <th>Role Name</th>
                     <th>Role Description</th>
-                    <th></th>
+                    <th class="text-center">Manage Permissions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of roles">
                     <td>{{data.role}}</td>
                     <td>{{data.desc}}</td>
-                    <td><button routerLink="/dashboard/managePermission/{{data.role}}" appActionButton actionTitle="MANAGE_ROLE_PERMISSION">Manage Permission</button>  <button (click)="roleDelete(data._id)">Delete</button></td>
+                    <td class="text-center">
+                        <button routerLink="/dashboard/managePermission/{{data.role}}" appActionButton actionTitle="MANAGE_ROLE_PERMISSION"> <i class="fa fas fa-pencil-square-o"></i></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<H3>Add Role</H3>
-
-    {{ successInserted }}
-
-<hr>
-<form #role="ngForm">
-    <div class="row mb-2">
-        <div class="col-sm-3">Role Name</div>
-        <div class="col-sm-9">
-            <input class="form-control" type="text" name="rolename" [(ngModel)]="roleName">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Role</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-main-content">
+            <form #role="ngForm">
+                <div class="row mb-2">
+                    <div class="col-sm-3">Role Name</div>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="rolename" [(ngModel)]="roleName">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-3">Role Description</div>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="roleDesc"></textarea>
+                    </div>
+                </div>    
+                <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <button class="btn btn-success" (click)="registerRole()">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </div>
         </div>
     </div>
-    <div class="row mb-2">
-        <div class="col-sm-3">Role Description</div>
-        <div class="col-sm-9">
-            <textarea class="form-control" name="roledesc" id="" cols="30" rows="3" [(ngModel)]="roleDesc"></textarea>
-        </div>
-    </div>    
-    <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-9">
-                <button class="btn btn-success" (click)="registerRole()">Submit</button>
-            </div>
-    </div>
-</form>
-
-
-
-
+</div>
