@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { isPromiseAlike } from 'q';
+import { DataService } from './data.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ActionValidationService {
    loggedInUserPermissions;
    tempUserPermission;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ds: DataService) {
 
    }
 
@@ -30,7 +31,6 @@ export class ActionValidationService {
       isAllowed = this.loggedInUserPermissions[actionTitle];
 
   }
-    console.log( 'checking for' + actionTitle + 'for the role' + role + 'result- ' + isAllowed);
     return isAllowed;
 
   }
@@ -50,13 +50,7 @@ export class ActionValidationService {
 
         isAllowed = this.tempUserPermission[actionTitle];
     }
-      // console.log( 'FPR TEMP USER checking for' + actionTitle + 'for the role' + role + 'result- ' + isAllowed);
-
-      return isAllowed;
-
-
-    
-
+    return isAllowed;
   }
 
 
@@ -71,11 +65,54 @@ export class ActionValidationService {
     });
   }
 
-  setTempRolePermission(role) {
+   setTempRolePermission(role) {
+
+
+
+
+
+return new Promise((resolve, reject) => {
+
+
+
+    console.log('setting temp role permission');
+    let f = {};
+    let allFeatures;
     this.http.get<any>('http://localhost:3000/getPermisions/' + role).subscribe((d) => {
 
-      this.tempUserPermission = d.data[0].permissions;
+    this.tempUserPermission = d.data[0].permissions;
+
+
+
+
+    this.ds.getCRMFeatures().subscribe(( d ) => {
+      allFeatures = d.data;
+      allFeatures.forEach((ele) => {
+        f[ele.action_title] = this.checkPermissionToManageRole(ele.action_title, role);
+
+        ele.sub_options.forEach((el) => {
+
+          // this will add a key for subfeature along with it's permission. that is also fetched
+          // from ActionValidation Service.
+          f[el.action_title] = this.checkPermissionToManageRole(el.action_title, role);
+        });
+
+      });
+
+      resolve({f:f, allFeatures:allFeatures});
+
     });
+
+
+
+
+
+    });
+
+
+
+
+  }); // promise callback body finish
   }
 }
 
