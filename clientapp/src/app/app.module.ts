@@ -10,7 +10,7 @@ import { StudentComponent } from './student/student.component';
 import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { ActionButtonDirective } from './action-button.directive';
+
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,9 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     CourseComponent,
     RolesComponent,
     WelcomeComponent,
-    ActionButtonDirective,
-    ManagePermissionsComponent,
-
+    ManagePermissionsComponent
   ],
   imports: [
     BrowserModule,

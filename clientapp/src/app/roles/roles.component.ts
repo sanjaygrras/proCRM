@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
 import { BackendService } from '../backend.service';
 
 @Component({
@@ -13,46 +12,40 @@ export class RolesComponent implements OnInit {
   roleName;
   roleDesc;
   successInserted;
-  constructor(private _backend:BackendService) { }
+
+  constructor(private backend: BackendService) { }
 
   ngOnInit() {
-     this._backend.getroles().subscribe((data)=>{
-       //alert(JSON.stringify(data));
-       this.roles= data;
-     })
+     this.backend.getroles().subscribe((data) => {
+       this.roles = data;
+     });
   }
 
-  refresh(){
-    this._backend.getroles().subscribe((d) => {
+  refresh() {
+    this.backend.getroles().subscribe((d) => {
       this.roles = d;
       console.log(d);
-    })
+    });
     console.log(this.roles);
   }
 
   registerRole() {
-    let data = { role:this.roleName, desc:this.roleDesc};
-    this._backend.postroles(data).subscribe((d) => {
+    const data = { role: this.roleName, desc: this.roleDesc};
+    this.backend.postroles(data).subscribe((d) => {
       console.log(d);
-      if(d.status == "ok") {
-        //this.successInserted = "New role successfully inserted";
-        alert("Successfully inserted");
+      if (d.status === 'ok') {
+       this.refresh();
       }
     });
-    
-    this._backend.getroles().subscribe((data)=>{
-      //alert(JSON.stringify(data));
-      this.roles= data;
-    })
 
 
   }
 
-  roleDelete(i){
+  roleDelete(i) {
     console.log(i);
-    this._backend.deleterole({'id': i}).subscribe((d)=>{
+    this.backend.deleterole( { id: i} ).subscribe( (d) => {
       console.log(d);
-    })
+    });
   }
 
 }
