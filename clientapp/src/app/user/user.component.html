@@ -1,0 +1,93 @@
+<div class="topbar-menu mb-3 text-right">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add User
+    </button>
+</div>
+<div class="card mb-5">
+    <div class="card-body">
+        <h2 class="mb-3">Users List</h2>
+        <table class="table table-border table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Password</th>
+                    <th>Contact</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let us of userArray">
+                    <td>{{ us.name }}</td>
+                    <td>{{ us.email }}</td>
+                    <td>*****</td>
+                    <td>{{ us.contact }}</td>
+                    <td>{{ us.role }}</td>
+                    <td></td>
+                    <td></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Add User</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-main-content">
+            <form #userForm="ngForm">
+                <div class="row mb-2">
+                    <div class="col-sm-3">Name</div>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="name" [(ngModel)]="name">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-3">Email</div>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="email" [(ngModel)]="email">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-3">Password</div>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="pass" [(ngModel)]="pass">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-3">Contact</div>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" name="contact" [(ngModel)]="contact">
+                    </div>
+                </div> 
+                <div class="row mb-2">
+                    <div class="col-sm-3">Role</div>
+                    <div class="col-sm-9">
+                        <select class="form-control"  id="roles" name="role" [(ngModel)]="role">
+                            <option *ngFor = "let r of rolesArray" value="{{ r.role }}">{{ r.role }}</option>
+                        </select>
+
+            
+                    </div>
+                </div>                
+                <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
+                            <button class="btn btn-success" (click)="userRegister()">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>

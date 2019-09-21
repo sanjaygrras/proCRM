@@ -1,22 +1,25 @@
 
-<h2>{{role}} Permissions Settings</h2>
+<h2 class="mb-3">{{role}} Permissions Settings</h2>
 
-<form #mform="ngForm">
+    <form #mform="ngForm">
+        <div *ngFor="let o of allFeatures" >
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4 class="mb-3">
+                        <input type="checkbox" name="o.action_title" [(ngModel)]= "f[o.action_title]" > 
+                        {{o.action_title}}
+                    </h4> 
+                    <!-- {{o.action_title}}-{{f[o.action_title]}} -->
 
-<div *ngFor="let o of allFeatures" >
-   <h4>{{o.action_title}}  <input type="checkbox" name="o.action_title" [(ngModel)]= "f[o.action_title]" > </h4> 
-    <!-- {{o.action_title}}-{{f[o.action_title]}} -->
-
-    <div *ngFor="let so of o.sub_options" >
-       <h6>{{so.action_title}} <input type="checkbox" name="{{so.action_title}}" [(ngModel)]= "f[so.action_title]" ></h6> 
-    
-        <!-- {{so.action_title}}-{{f[so.action_title]}} -->
-    </div>
-<hr>
-</div>
-
-
-
-<button (click)="check()"> click </button>
-
-</form>
+                    <div class="mb-2" *ngFor="let so of o.sub_options" >
+                        <h6>
+                            <input type="checkbox" name="{{so.action_title}}" [(ngModel)]= "f[so.action_title]" >
+                            {{so.action_title}} 
+                        </h6>
+                        <!-- {{so.action_title}}-{{f[so.action_title]}} -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success" (click)="check()"> Submit </button>
+    </form>

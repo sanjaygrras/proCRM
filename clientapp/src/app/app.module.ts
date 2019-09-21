@@ -13,6 +13,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     CourseComponent,
     RolesComponent,
     WelcomeComponent,
-    ManagePermissionsComponent
+    ManagePermissionsComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

@@ -202,21 +202,11 @@ app.get('/getAllFeatures', (req,res)=>{
             })
 
     
-            app.post('/registerUser', bodyParser.json(), (req,res)=>{
-                
-                    let collection = connection.db('procrm').collection('users');
-                    collection.insertOne(req.body,(err,r)=>{
-                        if(!err && r)
-                        {
-                            res.send({status:"ok", msg:"User Created Successfully", data:r});
-                        }
-                        else{
-                            res.send({status:"failed", msg:"some error occured", data:err});
-                            
-                        }
-                    })
         
-                })
+                
+                    
+        
+            
 
                 app.post('/createRole', bodyParser.json(), (req,res)=>{
                 
@@ -234,7 +224,34 @@ app.get('/getAllFeatures', (req,res)=>{
         
                 })
 
+app.post('/user-register', bodyParser.json(), (req,res)=>{
+    console.log("Express Hit");
+    console.log(req.body);
+    let collection = connection.db('procrm').collection('users');
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"User Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
+})
 
+app.get('/user-get',(req,res) => {
+    let collection = connection.db('procrm').collection('users');
+    collection.find().toArray((err,docs)=>{
+        if(!err)
+        {
+            res.send({status:"ok", msg:"data fetched successfully", data:docs})
+        }
+        else{
+            res.send({status:"failed", msg:"some error occured", data:err})
+        }
+    })    
+})
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");

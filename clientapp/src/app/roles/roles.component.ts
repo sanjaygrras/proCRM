@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { ActionValidationService } from '../action-validation.service';
 
 @Component({
   selector: 'app-roles',
@@ -13,7 +14,8 @@ export class RolesComponent implements OnInit {
   roleDesc;
   successInserted;
 
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, private avs: ActionValidationService) { }
+
 
   ngOnInit() {
      this.backend.getroles().subscribe((data) => {
@@ -46,6 +48,11 @@ export class RolesComponent implements OnInit {
     this.backend.deleterole( { id: i} ).subscribe( (d) => {
       console.log(d);
     });
+  }
+
+  isAllowed(f) {
+    return this.avs.checkRolePermission(f);
+
   }
 
 }
