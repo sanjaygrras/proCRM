@@ -13,6 +13,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ActionButtonDirective } from './action-button.directive';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     WelcomeComponent,
     ActionButtonDirective,
     ManagePermissionsComponent,
+    UserComponent,
 
   ],
   imports: [

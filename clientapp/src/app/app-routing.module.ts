@@ -9,6 +9,7 @@ import { CourseComponent } from './course/course.component';
 import { RolesComponent } from './roles/roles.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path:"", component:LoginComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
     {path:"students", component:StudentComponent},
     {path:"course", component:CourseComponent},
     {path:"managePermission/:role", component:ManagePermissionsComponent},
+    {path:"users", component:UserComponent}
     
   ]}
 ];
