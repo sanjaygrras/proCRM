@@ -21,7 +21,7 @@
                     <td>{{data.role}}</td>
                     <td>{{data.desc}}</td>
                     <td class="text-center">
-                        <button routerLink="/dashboard/managePermission/{{data.role}}" appActionButton actionTitle="MANAGE_ROLE_PERMISSION"> <i class="fa fas fa-pencil-square-o"></i></button>
+                        <button routerLink="/dashboard/managePermission/{{data.role}}" *ngIf="isAllowed('MANAGE_ROLE_PERMISSION')" >  <i class="fa fas fa-pencil-square-o"> </i> {{data.role}}</button>
                     </td>
                 </tr>
             </tbody>
