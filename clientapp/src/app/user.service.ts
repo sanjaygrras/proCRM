@@ -17,4 +17,8 @@ export class UserService {
     return this.imp.get('http://localhost:3000/user-get');
   }
 
+  userdel(): any {
+
+  }
+
 }

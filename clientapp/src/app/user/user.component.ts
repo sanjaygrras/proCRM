@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
 
     this.u.userget().subscribe((g) => {
       this.userArray = g.data;
-      //console.log(this.userArray);
+      // console.log(this.userArray);
     });
 
   }
@@ -35,8 +35,14 @@ export class UserComponent implements OnInit {
     const rData = {email: this.email, pass: this.pass, role: this.role, contact: this.contact,  name: this.name };
     console.log(rData);
     this.u.userRegisterPush(rData).subscribe((d) => {
-      //console.log(d);
-      
+      // console.log(d);
+    });
+  }
+
+  deleteUser() {
+    const del = {};
+    this.u.userdel().subscribe( (r) => {
+
     });
   }
 

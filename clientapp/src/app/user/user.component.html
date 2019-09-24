@@ -1,6 +1,6 @@
 <div class="topbar-menu mb-3 text-right">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
         Add User
     </button>
 </div>
@@ -12,30 +12,28 @@
                 <tr>
                     <th>Name</th>
                     <th>E-mail</th>
-                    <th>Password</th>
                     <th>Contact</th>
                     <th>Role</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
                 </tr>
             </thead>
             <tbody>
               <tr *ngFor="let us of userArray">
                     <td>{{ us.name }}</td>
                     <td>{{ us.email }}</td>
-                    <td>*****</td>
                     <td>{{ us.contact }}</td>
                     <td>{{ us.role }}</td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-center"><button (click)="editUser(us.id)"></button><i class="fa fa-pencil-square-o"></i></td>
+                    <td class="text-center"><button (click)="deleteUser(us.id)"><i class="fa fa-trash-o"></i></button></td>
               </tr>
             </tbody>
-        </table>
+        </table> 
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -83,7 +81,7 @@
                 <div class="row">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-9">
-                            <button class="btn btn-success" (click)="userRegister()">Submit</button>
+                            <button class="btn btn-success" data-dismiss="modal" (click)="userRegister()">Submit</button>
                         </div>
                 </div>
             </form>
