@@ -258,7 +258,7 @@ app.post('/user-del', bodyParser.json(), (req,res) => {
     connection.deleteOne(req.body,(err,r) => {
         if(!err && r)
         {
-            res.send({status:"ok", msg:"User deleted Successfully", data:r});
+            res.send({status:"ok", msg:"User Created Successfully", data:r});
         }
         else{
             res.send({status:"failed", msg:"some error occured", data:err});

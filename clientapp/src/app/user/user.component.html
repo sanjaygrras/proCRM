@@ -10,6 +10,7 @@
         <table class="table table-border table-striped">
             <thead>
                 <tr>
+                    <th>S.No.</th>
                     <th>Name</th>
                     <th>E-mail</th>
                     <th>Contact</th>
@@ -20,12 +21,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let us of userArray">
+                    <td>{{ userArray.indexOf(us) + 1 }}</td>
                     <td>{{ us.name }}</td>
                     <td>{{ us.email }}</td>
                     <td>{{ us.contact }}</td>
                     <td>{{ us.role }}</td>
                     <td class="text-center"><button (click)="editUser(us.id)"></button><i class="fa fa-pencil-square-o"></i></td>
-                    <td class="text-center"><button (click)="deleteUser(us.id)"><i class="fa fa-trash-o"></i></button></td>
+                    <td class="text-center"><button (click)="deleteUser(us._id)"><i class="fa fa-trash-o"></i></button></td>
               </tr>
             </tbody>
         </table> 

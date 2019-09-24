@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserService {
 
-  constructor(private imp:HttpClient) { }
+  constructor(private imp: HttpClient) { }
 
   userRegisterPush(data): any {
-    console.log('Service Hit');
+    // console.log('Service Hit');
     return this.imp.post('http://localhost:3000/user-register', data);
   }
 
@@ -17,8 +17,9 @@ export class UserService {
     return this.imp.get('http://localhost:3000/user-get');
   }
 
-  userdel(): any {
-
+  userdel(a): any {
+    console.log(' delete in service ');
+    return this.imp.post('http://loclahot:3000/user-del', a);
   }
 
 }

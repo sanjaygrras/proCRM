@@ -255,16 +255,7 @@ app.get('/user-get',(req,res) => {
 
 app.post('/user-del', bodyParser.json(), (req,res) => {
     let collection = connection.db('procrm').collection('users');
-    connection.deleteOne(req.body,(err,r) => {
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User deleted Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }   
-    })
+    
 })
 
 app.listen(3000,()=>{

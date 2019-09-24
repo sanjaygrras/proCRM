@@ -240,33 +240,6 @@ app.post('/user-register', bodyParser.json(), (req,res)=>{
                     })
 })
 
-app.get('/user-get',(req,res) => {
-    let collection = connection.db('procrm').collection('users');
-    collection.find().toArray((err,docs)=>{
-        if(!err)
-        {
-            res.send({status:"ok", msg:"data fetched successfully", data:docs})
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err})
-        }
-    })    
-})
-
-app.post('/user-del', bodyParser.json(), (req,res) => {
-    let collection = connection.db('procrm').collection('users');
-    connection.deleteOne(req.body,(err,r) => {
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User deleted Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }   
-    })
-})
-
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");
 });

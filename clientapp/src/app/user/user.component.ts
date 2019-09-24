@@ -17,6 +17,8 @@ export class UserComponent implements OnInit {
   userArray;
   rolesArray;
 
+  delUser;
+
   constructor(private u: UserService, private _backend:BackendService) { }
 
   ngOnInit() {
@@ -39,10 +41,12 @@ export class UserComponent implements OnInit {
     });
   }
 
-  deleteUser() {
-    const del = {};
-    this.u.userdel().subscribe( (r) => {
-
+  deleteUser(a) {
+    this.delUser = a;
+    alert(this.delUser);
+    const del = {d: this.delUser};
+    this.u.userdel(del).subscribe( (r) => {
+      alert('222222222222');
     });
   }
 
