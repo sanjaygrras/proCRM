@@ -253,8 +253,8 @@ app.get('/user-get',(req,res) => {
     })    
 })
 
-app.post('/user-del',bodyParser.json(), (req,res) => {
-    console.log("user Deleting......");
+app.post('/user-del', bodyParser.json(), (req,res) => {
+    console.log("dddddddddddd");
     console.log(bodyParser.json());
     let collection = connection.db('procrm').collection('users');
     collection.deleteOne(req.body,(err,r)=>{

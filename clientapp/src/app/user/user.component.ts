@@ -46,9 +46,10 @@ export class UserComponent implements OnInit {
     alert(this.delUser);
     const del = {d: this.delUser};
     this.u.userdel(del).subscribe( (r) => {
-      alert('222222222222');
+      //alert('222222222222');
     });
   }
 
-
+  editUser() {
+  }
 }

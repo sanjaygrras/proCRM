@@ -17,9 +17,9 @@ export class UserService {
     return this.imp.get('http://localhost:3000/user-get');
   }
 
-  userdel(a): any {
-    console.log(' delete in service ');
-    return this.imp.post('http://loclahot:3000/user-del', a);
+  userdel(data): any {
+    alert(' delete in service ');
+    return this.imp.post('http://localhost:3000/user-del', data);
   }
 
 }
