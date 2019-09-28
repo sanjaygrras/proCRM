@@ -198,36 +198,36 @@ app.post('/login', bodyParser.json(), (req,res)=>{
     })
 })
 
-app.post('/createRole', bodyParser.json(), (req,res)=>{
-
-    let collection = connection.db('procrm').collection('roles');
-    collection.insertOne(req.body,(err,r)=>{
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"Role Created Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
-
-})
+                app.post('/createRole', bodyParser.json(), (req,res)=>{
+                
+                    let collection = connection.db('procrm').collection('roles');
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"Role Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
+        
+                })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
     console.log("Express Hit");
     console.log(req.body);
     let collection = connection.db('procrm').collection('users');
-    collection.insertOne(req.body,(err,r)=>{
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User Created Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"User Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
 })
 
 app.get('/user-get',(req,res) => {
@@ -251,20 +251,6 @@ app.post('/user-del',bodyParser.json(), (req,res) => {
         if(!err && r)
         {
             res.send({status:"ok", msg:"User deleted Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
-})
-
-app.post('/user-edit', bodyParser.json(), (req,res) => {
-    let collection = connection.db('procrm').collection('users');
-    collection.updateOne({_id:ObjectId(req.body._id)}, { $set:{ name:req.body.name, email:req.body.email, pass:req.body.pass, role:req.body.role, contact:req.body.contact } }, (err,r) => {
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User edited Successfully", data:r});
         }
         else{
             res.send({status:"failed", msg:"some error occured", data:err});

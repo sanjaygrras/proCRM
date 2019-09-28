@@ -18,8 +18,12 @@ export class UserService {
   }
 
   userdel(data): any {
-    alert(' delete in service ');
+    // alert(' delete in service ');
     return this.imp.post('http://localhost:3000/user-del', data);
+  }
+
+  userEditPush(data): any {
+    return this.imp.post('http://localhost:3000/user-edit', data);
   }
 
 }

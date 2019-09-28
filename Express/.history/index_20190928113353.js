@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongo = require('mongodb');
-const ObjectId = mongo.ObjectId;
+
 const mongoClient = mongo.MongoClient;
 // let client = new mongoClient('mongodb://localhost:27017/procrm', {useNewUrlParser: true});
 let client  = new mongoClient("mongodb+srv://sanjayrathore144:sanjayrathore144@cluster0-wtjik.mongodb.net/test?retryWrites=true&w=majority" , {useNewUrlParser:true});
@@ -156,78 +156,88 @@ console.log(req.params.role);
 })
 
 app.get('/getAllFeatures', (req,res)=>{
-    // console.log(req.params.role);
-    let collection = connection.db('procrm').collection('crm_features');
-    collection.find().toArray((err,docs)=>{
-        if(!err)
-        {
-            res.send({status:"ok", msg:"data fetched successfully", data:docs})
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err})
-        }
+    console.log(req.params.role);
+        let collection = connection.db('procrm').collection('crm_features');
+        collection.find().toArray((err,docs)=>{
+            if(!err)
+            {
+                res.send({status:"ok", msg:"data fetched successfully", data:docs})
+            }
+            else{
+                res.send({status:"failed", msg:"some error occured", data:err})
+            }
+        })
     })
-})
 
-app.post('/updateRolePermissions/:role', bodyParser.json(), (req,res)=>{
-    // console.log("updating permission for ");
-    // console.log(req.params.role);
-    let collection = connection.db('procrm').collection('roles');
-    collection.update({role:req.params.role},{$set:{permissions:req.body}},(err,r)=>{
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"permissions updated successfully for"+req.params.role, data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-        }
-    })
-})
+    app.post('/updateRolePermissions/:role', bodyParser.json(), (req,res)=>{
+        console.log("updating permission for ");
+        console.log(req.params.role);
+            let collection = connection.db('procrm').collection('roles');
+            collection.update({role:req.params.role},{$set:{permissions:req.body}},(err,r)=>{
+                if(!err && r)
+                {
+                    res.send({status:"ok", msg:"permissions updated successfully for"+req.params.role, data:r});
+                }
+                else{
+                    res.send({status:"failed", msg:"some error occured", data:err});
+                    
+                }
+            })
+
+        })
     
-app.post('/login', bodyParser.json(), (req,res)=>{
-    let collection = connection.db('procrm').collection('users');
-    collection.find({email:req.body.email, pass:req.body.pass}).toArray((err,docs)=>{
-        if(!err && docs.length>0)
-        {
-            res.send({status:"ok", msg:"Login Succesfull", data:docs});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
+        app.post('/login', bodyParser.json(), (req,res)=>{
+                let collection = connection.db('procrm').collection('users');
+                collection.find({email:req.body.email, pass:req.body.pass}).toArray((err,docs)=>{
+                    if(!err && docs.length>0)
+                    {
+                        res.send({status:"ok", msg:"Login Succesfull", data:docs});
+                    }
+                    else{
+                        res.send({status:"failed", msg:"some error occured", data:err});
+                        
+                    }
+                })
+    
+            })
+
+    
+        
+                
+                    
+        
             
-        }
-    })
-})
 
-app.post('/createRole', bodyParser.json(), (req,res)=>{
-
-    let collection = connection.db('procrm').collection('roles');
-    collection.insertOne(req.body,(err,r)=>{
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"Role Created Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
-
-})
+                app.post('/createRole', bodyParser.json(), (req,res)=>{
+                
+                    let collection = connection.db('procrm').collection('roles');
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"Role Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
+        
+                })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
     console.log("Express Hit");
     console.log(req.body);
     let collection = connection.db('procrm').collection('users');
-    collection.insertOne(req.body,(err,r)=>{
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User Created Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
+                    collection.insertOne(req.body,(err,r)=>{
+                        if(!err && r)
+                        {
+                            res.send({status:"ok", msg:"User Created Successfully", data:r});
+                        }
+                        else{
+                            res.send({status:"failed", msg:"some error occured", data:err});
+                            
+                        }
+                    })
 })
 
 app.get('/user-get',(req,res) => {
@@ -244,27 +254,13 @@ app.get('/user-get',(req,res) => {
 })
 
 app.post('/user-del',bodyParser.json(), (req,res) => {
-    // console.log("user Deleting......");
-    // console.log(req.body);
+    console.log("user Deleting......");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
-    collection.deleteOne({_id:ObjectId(req.body.d)},(err,r)=>{
+    collection.deleteOne(req.body,(err,r)=>{
         if(!err && r)
         {
-            res.send({status:"ok", msg:"User deleted Successfully", data:r});
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err});
-            
-        }
-    })
-})
-
-app.post('/user-edit', bodyParser.json(), (req,res) => {
-    let collection = connection.db('procrm').collection('users');
-    collection.updateOne({_id:ObjectId(req.body._id)}, { $set:{ name:req.body.name, email:req.body.email, pass:req.body.pass, role:req.body.role, contact:req.body.contact } }, (err,r) => {
-        if(!err && r)
-        {
-            res.send({status:"ok", msg:"User edited Successfully", data:r});
+            res.send({status:"ok", msg:"User Created Successfully", data:r});
         }
         else{
             res.send({status:"failed", msg:"some error occured", data:err});

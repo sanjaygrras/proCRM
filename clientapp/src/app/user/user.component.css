@@ -1,0 +1,8 @@
+#notify{
+    position: fixed;
+    top: 80px;
+    left: 28%;
+    opacity: 0;
+    transition: opacity 1s;
+    width: calc(100% - 39%);
+}
