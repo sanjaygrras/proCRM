@@ -8,16 +8,19 @@ import { ActionValidationService } from '../action-validation.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  title = 'Welcome';
+  username;
   constructor(private route: Router, private avs: ActionValidationService) { }
 
   ngOnInit() {
     this.avs.setRolePermission(localStorage.getItem('role'));
+    this.username = localStorage.getItem('username');
   }
 
   logout() {
     localStorage.removeItem('email');
+    localStorage.removeItem('username');
     this.route.navigate(['']);
+
   }
 
   isAllowed(f) {
