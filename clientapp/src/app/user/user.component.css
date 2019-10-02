@@ -6,3 +6,6 @@
     transition: opacity 1s;
     width: calc(100% - 39%);
 }
+.invalid{
+    border:1px solid red;
+}

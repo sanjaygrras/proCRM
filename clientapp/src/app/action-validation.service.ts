@@ -23,13 +23,13 @@ export class ActionValidationService {
     if (role === 'Admin') {
       isAllowed = true;
     } else if (this.loggedInUserPermissions.length === 0) {
-
+        console.log("logged inuser permission did not set");
         return false;
 
     }    else {
 
       isAllowed = this.loggedInUserPermissions[actionTitle];
-
+      console.log('logged in user has permission for ' + actionTitle + 'is ' + isAllowed);
   }
     return isAllowed;
 

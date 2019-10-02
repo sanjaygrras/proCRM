@@ -21,8 +21,12 @@ export class UserComponent implements OnInit {
   notificationMessage;
   delUser;
   idForEdit;
+  isExist = false;
+  mandatory = false;
+  IsmodelShow;
 
   @ViewChild('notification', {static: false}) notification;
+  @ViewChild('userForm', {static: true}) validatingForm;
 
    constructor(private u: UserService, private _backend: BackendService) { }
 
@@ -33,42 +37,60 @@ export class UserComponent implements OnInit {
 
     this.u.userget().subscribe((g) => {
       this.userArray = g.data;
-      // console.log(this.userArray);
     });
 
+  }
+
+  checkMail() {
+    this.isExist = this.userArray.some((u) => {
+      if (u.email === this.email) {
+         return true;
+       }
+     });
   }
 
   userRegister() {
-    const rData = {email: this.email, pass: this.pass, role: this.role, contact: this.contact,  name: this.name };
-    console.log(rData);
-    this.u.userRegisterPush(rData).subscribe((d) => {
-      if ( d.status === 'ok') {
+    if ( this.validatingForm.invalid ) {
+      this.mandatory = true;
+    } else {
+      const rData = {email: this.email, pass: this.pass, role: this.role, contact: this.contact,  name: this.name };
+      this.u.userRegisterPush(rData).subscribe((d) => {
+        if ( d.status === 'ok') {
+        this.notificationMessage = 'user created Successfully';
+        this.toggleMessage( '1' );
+        setTimeout(this.toggleMessage , 3000, '0');
 
-       this.notificationMessage = 'user created Successfully';
-       this.toggleMessage( '1' );
-       setTimeout(this.toggleMessage , 3000, '0');
-       this.u.userget().subscribe((g) => {
-          this.userArray = g.data;
-        });
-      }
-    });
+        // removing default data form popup form so that form will be show empty next time otherwise last edit value will be there
+        this.name = '';
+        this.email = '';
+        this.contact = '';
+        this.role = '';
+        this.pass = '';
+
+        this.u.userget().subscribe((g) => {
+            this.userArray = g.data;
+          });
+        }
+      });
+
+     // this.IsmodelShow = true;
+
+      document.getElementById('spy').click();
+
+  
+
+   }
   }
 
-
   toggleMessage(o) {
-    // alert('toggel called with opacity' + o);
-    // this.notification.nativeElement.style.opacity = o;
     document.getElementById('notify').style.opacity = o;
   }
 
-
   deleteUser(a) {
     this.delUser = a;
-    // alert(this.delUser);
     const del = {d: this.delUser};
     this.u.userdel(del).subscribe( (r) => {
       if ( r.status === 'ok') {
-      
         this.notificationMessage = 'user Deleted Successfully';
         this.toggleMessage( '1' );
         setTimeout(this.toggleMessage , 3000, '0');
@@ -81,8 +103,7 @@ export class UserComponent implements OnInit {
   }
 
   // getting data of user in form
-  edit(p)
-  {
+  edit(p) {
      // alert(JSON.stringify(p));
      this.idForEdit = p._id;
      this.name = p.name;
@@ -95,8 +116,6 @@ export class UserComponent implements OnInit {
   // getting edited data
   userEdit() {
     const rData = {_id: this.idForEdit, email: this.email, pass: this.pass, role: this.role, contact: this.contact,  name: this.name };
-    console.log("editing in ts.........");
-    console.log(rData);
     this.u.userEditPush(rData).subscribe((d) => {
       if ( d.status === 'ok') {
        this.notificationMessage = 'user edited Successfully';
