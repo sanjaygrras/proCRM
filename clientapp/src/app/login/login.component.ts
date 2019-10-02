@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
   getdata() {
    this.admin.check(this.user, this.pass).subscribe((adi) => {
     if (adi) {
+      console.log(adi.data);
+      localStorage.setItem('username', adi.data[0].name);
      localStorage.setItem('email', this.user);
      localStorage.setItem('role', adi.data[0].role );
 
