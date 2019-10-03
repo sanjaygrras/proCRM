@@ -9,7 +9,6 @@ import { BackendService } from '../backend.service';
 export class CourseComponent implements OnInit {
 
   title;
-  name;
   prerequisite;
   description;
   duration;
@@ -26,7 +25,7 @@ export class CourseComponent implements OnInit {
   }
 
   addCourse() {
-    const data = { title: this.title,
+    let data = { title: this.title,
                   prerequisite: this.prerequisite,
                   description: this.description,
                   duration: this.duration,
@@ -36,22 +35,15 @@ export class CourseComponent implements OnInit {
                 };
 
     this.backend.postcourse(data).subscribe((d) => {
-      // console.log(data);
+      console.log(d);
     });
   }
 
   deleteCourse(i) {
     console.log(i);
     this.backend.deletecourse({' id ': i}).subscribe((d) => {
-      // console.log(d);
-      this.backend.getcourse().subscribe((p) => {
-        this.course = p;
-      });
+      console.log(d);
     });
-  }
-
-  addTopics() {
-
   }
 
 }

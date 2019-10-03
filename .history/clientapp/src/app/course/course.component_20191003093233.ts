@@ -9,7 +9,6 @@ import { BackendService } from '../backend.service';
 export class CourseComponent implements OnInit {
 
   title;
-  name;
   prerequisite;
   description;
   duration;
@@ -43,15 +42,8 @@ export class CourseComponent implements OnInit {
   deleteCourse(i) {
     console.log(i);
     this.backend.deletecourse({' id ': i}).subscribe((d) => {
-      // console.log(d);
-      this.backend.getcourse().subscribe((p) => {
-        this.course = p;
-      });
+      console.log(d);
     });
-  }
-
-  addTopics() {
-
   }
 
 }

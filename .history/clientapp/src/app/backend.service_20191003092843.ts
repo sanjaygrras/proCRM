@@ -30,6 +30,7 @@ export class BackendService {
   }
 
   deleterole(data) {
+    console.log(data);
     return this.http.post('http://localhost:3000/delete-roles', data);
   }
 }

@@ -50,8 +50,4 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  addTopics() {
-
-  }
-
 }

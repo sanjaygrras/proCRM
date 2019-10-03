@@ -9,7 +9,6 @@ import { BackendService } from '../backend.service';
 export class CourseComponent implements OnInit {
 
   title;
-  name;
   prerequisite;
   description;
   duration;
@@ -17,16 +16,16 @@ export class CourseComponent implements OnInit {
   brochure = '';
   keywords = [];
   course;
-  constructor(private backend: BackendService) { }
+  constructor(private _backend: BackendService) { }
 
   ngOnInit() {
-    this.backend.getcourse().subscribe((p) => {
+    this._backend.getcourse().subscribe((p) => {
       this.course = p;
     });
   }
 
   addCourse() {
-    const data = { title: this.title,
+    let data = { title: this.title,
                   prerequisite: this.prerequisite,
                   description: this.description,
                   duration: this.duration,
@@ -35,23 +34,16 @@ export class CourseComponent implements OnInit {
                   keywords: this.keywords
                 };
 
-    this.backend.postcourse(data).subscribe((d) => {
-      // console.log(data);
+    this._backend.postcourse(data).subscribe((d) => {
+      console.log(d);
     });
   }
 
   deleteCourse(i) {
     console.log(i);
-    this.backend.deletecourse({' id ': i}).subscribe((d) => {
-      // console.log(d);
-      this.backend.getcourse().subscribe((p) => {
-        this.course = p;
-      });
+    this._backend.deletecourse({' id ': i}).subscribe((d) => {
+      console.log(d);
     });
-  }
-
-  addTopics() {
-
   }
 
 }

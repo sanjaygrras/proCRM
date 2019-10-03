@@ -9,7 +9,6 @@ import { BackendService } from '../backend.service';
 export class CourseComponent implements OnInit {
 
   title;
-  name;
   prerequisite;
   description;
   duration;
@@ -48,10 +47,6 @@ export class CourseComponent implements OnInit {
         this.course = p;
       });
     });
-  }
-
-  addTopics() {
-
   }
 
 }
