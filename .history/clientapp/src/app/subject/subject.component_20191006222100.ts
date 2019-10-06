@@ -1,0 +1,132 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataService } from '../data.service';
+import { stringify } from 'querystring';
+
+declare var document: any;
+
+@Component({
+  selector: 'app-subject',
+  templateUrl: './subject.component.html',
+  styleUrls: ['./subject.component.css']
+})
+
+@ViewChild('notification', {static: false}) notification;
+
+export class SubjectComponent implements OnInit {
+  title: any;
+  duration: any;
+  description: any;
+  brochure: any;
+  allSubject;
+  del;
+  id;
+  allTopics;
+  notificationMessage;
+
+  constructor(private subjectService: DataService) { }
+
+  ngOnInit() {
+    this.subjectService.getSubject().subscribe( (g) => {
+      this.allSubject = g.s;
+    });
+
+    this.subjectService.getTopics().subscribe( (t) => {
+      this.allTopics = t.s;
+    });
+  }
+
+  addSubject() {
+    const newSubject = {title: this.title, duration: this.duration, description: this.description, brochure: this.brochure };
+    this.subjectService.addSubject( newSubject ).subscribe( (s) => {
+      if ( s.status === 'ok') {
+        this.notificationMessage = 'user created Successfully';
+        this.toggleMessage( '1' );
+        setTimeout(this.toggleMessage , 3000, '0');
+      }
+      this.subjectService.getSubject().subscribe( (g) => {
+        this.allSubject = g.s;
+      });
+    });
+  }
+
+  deleteSubject(d) {
+    this.del = d;
+    const dSub = {del: this.del};
+    this.subjectService.deleteingSubject(dSub).subscribe((de) => {
+      this.subjectService.getSubject().subscribe( (g) => {
+        this.allSubject = g.s;
+      });
+    });
+  }
+
+  editSubject(e) {
+    this.id = e._id;
+    this.title = e.title;
+    this.duration = e.duration;
+    this.description = e.description;
+    this.brochure = e.brochure;
+  }
+
+  editUpdateSubject() {
+    const subUp = {_id: this.id, title: this.title, duration: this.duration, description: this.description, brochure: this.brochure};
+    this.subjectService.editingSubject(subUp).subscribe( (edit) => {
+
+      this.emptyForm();
+
+      this.subjectService.getSubject().subscribe( (g) => {
+        this.allSubject = g.s;
+      });
+    });
+  }
+
+  emptyForm() {
+    this.id = '';
+    this.title = '';
+    this.duration = '';
+    this.description = '';
+    this.brochure = '';
+  }
+
+  toggleMessage(o) {
+    document.getElementById('notify').style.opacity = o;
+  }
+
+  addTopics() {
+    const topicinfo = {title: this.title, duration: this.duration, description: this.description};
+    this.subjectService.addingTopics(topicinfo).subscribe((t) => {
+      this.subjectService.getTopics().subscribe( (t) => {
+        this.allTopics = t.s;
+      });
+    });
+  }
+
+  deleteTopic(d) {
+    this.del = d;
+    const dSub = {del: this.del};
+    this.subjectService.deleteingTopic(dSub).subscribe((de) => {
+      this.subjectService.getTopics().subscribe( (t) => {
+        this.allTopics = t.s;
+      });
+    });
+  }
+
+  editTopic(e) {
+    this.id = e._id;
+    this.title = e.title;
+    this.duration = e.duration;
+    this.description = e.description;
+  }
+
+  updateTopic() {
+    const topicUp = {_id: this.id, title: this.title, duration: this.duration, description: this.description};
+    this.subjectService.editingTopic(topicUp).subscribe( (edit) => {
+
+      this.emptyForm();
+
+      this.subjectService.getTopics().subscribe( (t) => {
+        this.allTopics = t.s;
+      });
+    });
+  }
+
+}

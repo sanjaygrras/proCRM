@@ -14,6 +14,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ManagePermissionsComponent } from './manage-permissions/manage-permissions.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
+import { SubjectComponent } from './subject/subject.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { UserComponent } from './user/user.component';
     RolesComponent,
     WelcomeComponent,
     ManagePermissionsComponent,
-    UserComponent
+    UserComponent,
+    SubjectComponent
   ],
   imports: [
     BrowserModule,
