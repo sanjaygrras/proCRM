@@ -50,10 +50,4 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  addTopics(t) {
-    this.backend.addTopic(t).subscribe((a) => {
-      alert('afds ');
-    });
-  }
-
 }

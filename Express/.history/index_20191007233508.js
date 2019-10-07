@@ -332,7 +332,7 @@ app.post('/edit-subject',bodyParser.json(), (req,res) => {
 
 app.post('/add-topic', bodyParser.json(),(req,res) => {
     let collection = connection.db('procrm').collection('subjects');
-    collection.updateOne({_id:ObjectId(req.body.subjectId)},{$set: {Topics:{topicTitle: req.body.title, topicDuration: req.body.duration, topicDescription: req.body.description }}}, (notOk,ok) => {
+    collection.updateOne({_id:ObjectId(req.body.subjectId)},{$set: {Topics:req.body}}, (notOk,ok) => {
         if(!notOk && ok) {
             res.send({status:"ok", msg:"Topic added Successfully", s:ok})
         } else {

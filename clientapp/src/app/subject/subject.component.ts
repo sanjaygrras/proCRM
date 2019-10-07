@@ -15,8 +15,12 @@ export class SubjectComponent implements OnInit {
   allSubject;
   del;
   id;
+  subjectId;
   allTopics;
   msg;
+  topicTitle;
+  topicDuration;
+  topicDescription;
 
   constructor(private subjectService: DataService) { }
 
@@ -36,6 +40,7 @@ export class SubjectComponent implements OnInit {
       if (s.status === 'ok') {
           this.msg = s.msg;
       }
+      this.emptyForm();
       this.subjectService.getSubject().subscribe( (g) => {
         this.allSubject = g.s;
       });
@@ -81,11 +86,11 @@ export class SubjectComponent implements OnInit {
   }
 
   addTopics() {
-    const topicinfo = {title: this.title, duration: this.duration, description: this.description};
+    const topicinfo = {subjectId: this.subjectId, title: this.title, duration: this.duration, description: this.description};
     this.subjectService.addingTopics(topicinfo).subscribe((t) => {
-      this.subjectService.getTopics().subscribe( (t) => {
-        this.allTopics = t.s;
-      });
+      // this.subjectService.getTopics().subscribe( (s) => {
+      //   this.allTopics = s.s;
+      // });
     });
   }
 

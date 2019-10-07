@@ -34,13 +34,30 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of allSubject">
-                    <td>{{data.title}}</td>
-                    <td>{{data.duration}}</td>
-                    <td>{{data.description}}</td>
-                    <td>{{data.brochure}}</td>
-                    <td><button (click)="editSubject(data)" data-toggle="modal" data-target="#editUpdate"><i class="fa fa-pencil-square-o"></i></button></td>
-                    <td><button (click)= "deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
+                    <td colspan="6" style="padding: 0">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td>{{data.title}}</td>
+                                <td>{{data.duration}}</td>
+                                <td>{{data.description}}</td>
+                                <td>{{data.brochure}}</td>
+                                <td><button (click)="editSubject(data)" data-toggle="modal" data-target="#editUpdate"><i class="fa fa-pencil-square-o"></i></button></td>
+                                <td><button (click)= "deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
+                            </tr>
+
+                            <tr>
+                                <td>{{data.Topics.topicTitle}}</td>
+                                <td>{{data.Topics.topicDuration}}</td>
+                                <td>{{data.Topics.topicDescription}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </td>
                 </tr>
+                
             </tbody>
         </table>
     </div>
@@ -181,6 +198,14 @@
             </div>
             <form #topicAdd="ngForm">
                 <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Subjects</div>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="subjectId" id="subjectId" [(ngModel)]="subjectId">
+                                <option *ngFor="let subjectId of allSubject" value="{{subjectId._id}}">{{ subjectId.title }}</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Topic Name</div>
                         <div class="col-sm-8">

@@ -142,7 +142,7 @@ app.post('/delete-roles', bodyParser.json(), (req,res)=>{
 
 // by sanjay rathore till 187
 app.get('/getPermisions/:role', (req,res)=>{
-console.log(req.params.role);
+// console.log(req.params.role);
     let collection = connection.db('procrm').collection('roles');
     collection.find({role:req.params.role}).toArray((err,docs)=>{
         if(!err)
@@ -319,22 +319,11 @@ app.post('/edit-subject',bodyParser.json(), (req,res) => {
     })
 })
 
-// app.post('/add-topic', bodyParser.json(),(req,res) => {
-//     let collection = connection.db('procrm').collection('topics');
-//     collection.insertOne(req.body, (notOk,ok) => {
-//         if(!notOk && ok) {
-//             res.send({status:"ok", msg:"Subject added Successfully", s:ok})
-//         } else {
-//             res.send({status:"error", msg:"Getting errors", s:notOk})
-//         }
-//     });
-// })
-
 app.post('/add-topic', bodyParser.json(),(req,res) => {
-    let collection = connection.db('procrm').collection('subjects');
-    collection.updateOne({_id:ObjectId(req.body.subjectId)},{$set: {Topics:{topicTitle: req.body.title, topicDuration: req.body.duration, topicDescription: req.body.description }}}, (notOk,ok) => {
+    let collection = connection.db('procrm').collection('topics');
+    collection.insertOne(req.body, (notOk,ok) => {
         if(!notOk && ok) {
-            res.send({status:"ok", msg:"Topic added Successfully", s:ok})
+            res.send({status:"ok", msg:"Subject added Successfully", s:ok})
         } else {
             res.send({status:"error", msg:"Getting errors", s:notOk})
         }
