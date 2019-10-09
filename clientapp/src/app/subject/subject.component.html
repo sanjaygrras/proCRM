@@ -35,55 +35,43 @@
             <tbody>
                 <tr *ngFor="let data of allSubject">
                     <td colspan="6" style="padding: 0">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped m-0">
                             <tr>
                                 <td>{{data.title}}</td>
                                 <td>{{data.duration}}</td>
                                 <td>{{data.description}}</td>
                                 <td>{{data.brochure}}</td>
                                 <td><button (click)="editSubject(data)" data-toggle="modal" data-target="#editUpdate"><i class="fa fa-pencil-square-o"></i></button></td>
-                                <td><button (click)= "deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
+                                <td><button (click)="deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
                             </tr>
-
-                            <tr>
-                                <td>{{data.Topics.topicTitle}}</td>
-                                <td>{{data.Topics.topicDuration}}</td>
-                                <td>{{data.Topics.topicDescription}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            
+                            <tr *ngIf="data.Topics">
+                                <td colspan="6">
+                                    <ul >
+                                        <li><h4>Topics</h4> <hr></li>
+                                        <li *ngFor="let t of data.Topics" class="row">
+                                            <div class="col-sm-1">{{ data.Topics.indexOf(t) + 1 }}</div>
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-sm-8">{{t.topicTitle}}</div>
+                                                    <div class="col-sm-4">{{t.topicDuration}}</div>
+                                                    <div class="col-sm-12">{{t.topicDescription}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button (click)="editTopic(data)" data-toggle="modal" data-target="#editTopicUpdate"><i class="fa fa-pencil-square-o"></i></button>
+                                                <button (click)="deleteTopic(data._id)"> <i class="fa fa-trash-o"></i> </button>
+                                            </div>
+                                            
+                                        </li>
+                                    </ul>
+                                </td>
                             </tr>
 
                         </table>
                     </td>
                 </tr>
                 
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h2 class="mb-3">Topics</h2>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Duration</th>
-                    <th>Description</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of allTopics">
-                    <td>{{data.title}}</td>
-                    <td>{{data.duration}}</td>
-                    <td>{{data.description}}</td>
-                    <td><button (click)="editTopic(data)" data-toggle="modal" data-target="#editTopicUpdate"><i class="fa fa-pencil-square-o"></i></button></td>
-                    <td><button (click)= "deleteTopic(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
-                </tr>
             </tbody>
         </table>
     </div>

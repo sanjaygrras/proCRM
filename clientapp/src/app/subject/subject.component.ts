@@ -21,7 +21,7 @@ export class SubjectComponent implements OnInit {
   topicTitle;
   topicDuration;
   topicDescription;
-
+  topicRow;
   constructor(private subjectService: DataService) { }
 
   ngOnInit() {
@@ -88,9 +88,7 @@ export class SubjectComponent implements OnInit {
   addTopics() {
     const topicinfo = {subjectId: this.subjectId, title: this.title, duration: this.duration, description: this.description};
     this.subjectService.addingTopics(topicinfo).subscribe((t) => {
-      // this.subjectService.getTopics().subscribe( (s) => {
-      //   this.allTopics = s.s;
-      // });
+
     });
   }
 
@@ -105,10 +103,13 @@ export class SubjectComponent implements OnInit {
   }
 
   editTopic(e) {
+    this.topicRow = e.Topics.length;
+    console.log(this.topicRow = e.Topics.length + ' | ', e.Topics[0].topicTitle);
+
     this.id = e._id;
-    this.title = e.title;
-    this.duration = e.duration;
-    this.description = e.description;
+    this.title = e.Topics.topicTitle;
+    this.duration = e.Topics.topicDuration;
+    this.description = e.Topics.topicDescription;
   }
 
   updateTopic() {
