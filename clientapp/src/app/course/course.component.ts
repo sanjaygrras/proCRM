@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-course',
@@ -17,11 +18,17 @@ export class CourseComponent implements OnInit {
   brochure = '';
   keywords = [];
   course;
-  constructor(private backend: BackendService) { }
+  allSubject;
+  subjectId;
+  courseList;
+  constructor(private backend: BackendService, private subjectService: DataService) { }
 
   ngOnInit() {
     this.backend.getcourse().subscribe((p) => {
       this.course = p;
+    });
+    this.subjectService.getSubject().subscribe( (g) => {
+      this.allSubject = g.s;
     });
   }
 
@@ -49,5 +56,7 @@ export class CourseComponent implements OnInit {
       });
     });
   }
+
+  getCourse
 
 }

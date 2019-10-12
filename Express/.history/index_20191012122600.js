@@ -356,11 +356,8 @@ app.post('/delete-topic',bodyParser.json(), (req,res) => {
 })
 
 app.post('/edit-topic',bodyParser.json(), (req,res) => {
-    console.log(req.body);
     let collection = connection.db('procrm').collection('subjects');
-    collection.updateOne({_id:ObjectId(req.body._id), 
-                          Topics: { $elemMatch: { topicTitle: req.body.topicTitleOld } }
-                        },{$set:{ 'Topics.$.topicTitle':req.body.title, 'Topics.$.topicDuration': req.body.duration, 'Topics.$.topicDescription': req.body.description}},(err,r)=>{
+    collection.updateOne({_id:ObjectId(req.body._id)},{$set:{title:req.body.title, duration: req.body.duration, description: req.body.description}},(err,r)=>{
         if(!err && r) {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
         }

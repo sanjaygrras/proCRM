@@ -319,6 +319,17 @@ app.post('/edit-subject',bodyParser.json(), (req,res) => {
     })
 })
 
+// app.post('/add-topic', bodyParser.json(),(req,res) => {
+//     let collection = connection.db('procrm').collection('topics');
+//     collection.insertOne(req.body, (notOk,ok) => {
+//         if(!notOk && ok) {
+//             res.send({status:"ok", msg:"Subject added Successfully", s:ok})
+//         } else {
+//             res.send({status:"error", msg:"Getting errors", s:notOk})
+//         }
+//     });
+// })
+
 app.post('/add-topic', bodyParser.json(),(req,res) => {
     let collection = connection.db('procrm').collection('subjects');
     collection.updateOne({_id:ObjectId(req.body.subjectId)},{$push: {Topics:{topicTitle: req.body.title, topicDuration: req.body.duration, topicDescription: req.body.description }}}, (notOk,ok) => {
@@ -330,21 +341,21 @@ app.post('/add-topic', bodyParser.json(),(req,res) => {
     });
 })
 
-// app.get('/get-topics', (req,res) => {
-//     let collection = connection.db('procrm').collection('topics');
-//     collection.find().toArray( (err,docs) => {
-//         if(!err) {
-//             res.send({status:"ok", msg:"Topics retriving successfully", s:docs})
-//         } else {
-//             res.send({status:"error", msg:"Something wrong", s:err})
-//         }
-//     })
-// })
+app.get('/get-topics', (req,res) => {
+    let collection = connection.db('procrm').collection('topics');
+    collection.find().toArray( (err,docs) => {
+        if(!err) {
+            res.send({status:"ok", msg:"Topics retriving successfully", s:docs})
+        } else {
+            res.send({status:"error", msg:"Something wrong", s:err})
+        }
+    })
+})
 
 app.post('/delete-topic',bodyParser.json(), (req,res) => {
-    console.log(req.body);
+    console.log(req.body.topicTitle);
     let collection = connection.db('procrm').collection('subjects');
-    collection.updateOne({_id:ObjectId(req.body.subID)}, {$pull:{Topics:{topicTitle: req.body.del}}},(err,r)=>{
+    collection.updateOne({}, {$pull:{Topics:{topicTitle: 'req.body.topicTitle'}}},(err,r)=>{
         if(!err && r)
         {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
@@ -356,11 +367,8 @@ app.post('/delete-topic',bodyParser.json(), (req,res) => {
 })
 
 app.post('/edit-topic',bodyParser.json(), (req,res) => {
-    console.log(req.body);
-    let collection = connection.db('procrm').collection('subjects');
-    collection.updateOne({_id:ObjectId(req.body._id), 
-                          Topics: { $elemMatch: { topicTitle: req.body.topicTitleOld } }
-                        },{$set:{ 'Topics.$.topicTitle':req.body.title, 'Topics.$.topicDuration': req.body.duration, 'Topics.$.topicDescription': req.body.description}},(err,r)=>{
+    let collection = connection.db('procrm').collection('topics');
+    collection.updateOne({_id:ObjectId(req.body._id)},{$set:{title:req.body.title, duration: req.body.duration, description: req.body.description}},(err,r)=>{
         if(!err && r) {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
         }

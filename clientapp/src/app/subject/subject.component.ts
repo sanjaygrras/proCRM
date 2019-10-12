@@ -22,6 +22,9 @@ export class SubjectComponent implements OnInit {
   topicDuration;
   topicDescription;
   topicRow;
+  topicIndex;
+  topicTitleOld;
+
   constructor(private subjectService: DataService) { }
 
   ngOnInit() {
@@ -92,35 +95,44 @@ export class SubjectComponent implements OnInit {
     });
   }
 
-  deleteTopic(d) {
+  deleteTopic(d, s) {
     this.del = d;
-    const dSub = {del: this.del};
+    this.id = s;
+    const dSub = {del: this.del, subID: this.id};
     this.subjectService.deleteingTopic(dSub).subscribe((de) => {
-      this.subjectService.getTopics().subscribe( (t) => {
-        this.allTopics = t.s;
+      this.subjectService.getSubject().subscribe( (g) => {
+        this.allSubject = g.s;
       });
     });
   }
 
-  editTopic(e) {
-    this.topicRow = e.Topics.length;
-    console.log(this.topicRow = e.Topics.length + ' | ', e.Topics[0].topicTitle);
-
-    this.id = e._id;
-    this.title = e.Topics.topicTitle;
-    this.duration = e.Topics.topicDuration;
-    this.description = e.Topics.topicDescription;
+  editTopic(d, e) {
+    this.topicIndex = d.Topics.indexOf(e);
+    this.topicTitleOld = e.topicTitle;
+    this.id = d._id;
+    this.title = e.topicTitle;
+    this.duration = e.topicDuration;
+    this.description = e.topicDescription;
   }
 
   updateTopic() {
-    const topicUp = {_id: this.id, title: this.title, duration: this.duration, description: this.description};
+
+    const topicUp = {_id: this.id,
+                      title: this.title,
+                      duration: this.duration,
+                      description: this.description,
+                      topicIndex: this.topicIndex,
+                      topicTitleOld: this.topicTitleOld
+                    };
+
     this.subjectService.editingTopic(topicUp).subscribe( (edit) => {
 
       this.emptyForm();
 
-      this.subjectService.getTopics().subscribe( (t) => {
-        this.allTopics = t.s;
+      this.subjectService.getSubject().subscribe( (g) => {
+        this.allSubject = g.s;
       });
+
     });
   }
 

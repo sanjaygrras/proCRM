@@ -359,8 +359,8 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
     console.log(req.body);
     let collection = connection.db('procrm').collection('subjects');
     collection.updateOne({_id:ObjectId(req.body._id), 
-                          Topics: { $elemMatch: { topicTitle: req.body.topicTitleOld } }
-                        },{$set:{ 'Topics.$.topicTitle':req.body.title, 'Topics.$.topicDuration': req.body.duration, 'Topics.$.topicDescription': req.body.description}},(err,r)=>{
+                          Topics: { $elemMatch: { $position: req.body.titleIndex } }
+                        },{$set:{topicTitle:req.body.title, topicDuration: req.body.duration, topicDescription: req.body.description}},(err,r)=>{
         if(!err && r) {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
         }
