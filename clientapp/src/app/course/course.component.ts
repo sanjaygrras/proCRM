@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { DataService } from '../data.service';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-course',
@@ -17,15 +18,18 @@ export class CourseComponent implements OnInit {
   fee;
   brochure = '';
   keywords = [];
+  courses;
   course;
   allSubject;
+  subjectName: any;
   subjectId;
-  courseList;
+  coursesName: any;
+  courseId;
   constructor(private backend: BackendService, private subjectService: DataService) { }
 
   ngOnInit() {
     this.backend.getcourse().subscribe((p) => {
-      this.course = p;
+      this.courses = p;
     });
     this.subjectService.getSubject().subscribe( (g) => {
       this.allSubject = g.s;
@@ -48,15 +52,24 @@ export class CourseComponent implements OnInit {
   }
 
   deleteCourse(i) {
-    console.log(i);
-    this.backend.deletecourse({' id ': i}).subscribe((d) => {
-      // console.log(d);
+    this.backend.deletecourse({id: i}).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
-        this.course = p;
+        this.courses = p;
       });
     });
   }
 
-  getCourse
+  SubjectAdd() {
+    const cAdd = {
+        courseId: this.courseId,
+        subjectId: this.subjectId,
+      };
+
+    //alert(stringify(cAdd));
+
+    this.backend.subjectInCourse(cAdd).subscribe( (s) => {
+      console.log( ' Successfully updated' );
+    });
+  }
 
 }

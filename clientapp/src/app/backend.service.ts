@@ -32,4 +32,9 @@ export class BackendService {
   deleterole(data) {
     return this.http.post('http://localhost:3000/delete-roles', data);
   }
+
+  subjectInCourse(s): any {
+    return this.http.post('http://localhost:3000/subject-in-course', s);
+  }
+  
 }

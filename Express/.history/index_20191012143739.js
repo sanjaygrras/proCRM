@@ -345,7 +345,6 @@ app.post('/add-topic', bodyParser.json(),(req,res) => {
     });
 })
 
-
 // app.get('/get-topics', (req,res) => {
 //     let collection = connection.db('procrm').collection('topics');
 //     collection.find().toArray( (err,docs) => {
@@ -384,9 +383,6 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
         }
     })
 })
-
-
-
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");

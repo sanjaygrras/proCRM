@@ -345,7 +345,6 @@ app.post('/add-topic', bodyParser.json(),(req,res) => {
     });
 })
 
-
 // app.get('/get-topics', (req,res) => {
 //     let collection = connection.db('procrm').collection('topics');
 //     collection.find().toArray( (err,docs) => {

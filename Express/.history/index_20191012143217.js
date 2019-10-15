@@ -88,7 +88,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
     console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
     console.log(id);
-    collection_instance.deleteOne(id, (err, obj)=>{
+    collection_instance.deleteOne(id, (err,obj)=>{
         if(err){
             console.log('Something went wrong');
         }
@@ -345,7 +345,6 @@ app.post('/add-topic', bodyParser.json(),(req,res) => {
     });
 })
 
-
 // app.get('/get-topics', (req,res) => {
 //     let collection = connection.db('procrm').collection('topics');
 //     collection.find().toArray( (err,docs) => {
@@ -384,9 +383,6 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
         }
     })
 })
-
-
-
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");

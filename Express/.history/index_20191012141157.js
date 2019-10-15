@@ -88,7 +88,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
     console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
     console.log(id);
-    collection_instance.deleteOne(id, (err, obj)=>{
+    collection_instance.deleteOne(id, (err,obj)=>{
         if(err){
             console.log('Something went wrong');
         }
@@ -103,13 +103,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
     console.log(req.body);
     let collection = connection.db('procrm').collection('courses');
-    collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:{subjectId: req.body.subjectId}}}, (notOk,ok) => {
-        if(!notOk && ok) {
-            res.send({status:"ok", msg:"subject added in course Successfully", s:ok})
-        } else {
-            res.send({status:"error", msg:"Getting errors", s:notOk})
-        }
-    });
+    collection.updateOne();
 });
 
 
@@ -345,7 +339,6 @@ app.post('/add-topic', bodyParser.json(),(req,res) => {
     });
 })
 
-
 // app.get('/get-topics', (req,res) => {
 //     let collection = connection.db('procrm').collection('topics');
 //     collection.find().toArray( (err,docs) => {
@@ -384,9 +377,6 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
         }
     })
 })
-
-
-
 
 app.listen(3000,()=>{
     console.log("Server started at Port: 3000");

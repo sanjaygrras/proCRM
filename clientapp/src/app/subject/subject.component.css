@@ -1,0 +1,19 @@
+.tHead {
+    background: #efefef;
+}
+
+.tHead .col {
+    padding: 5px;
+}
+
+.tBodyRow {
+    border-bottom: 1px solid #efefef;
+}
+
+.tBodyRow:nth-child(2n+1) {
+    background: #efefef;
+}
+
+.tBodyRow > .col {
+    padding: 5px;
+}
