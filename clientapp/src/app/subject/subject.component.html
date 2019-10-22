@@ -37,9 +37,9 @@
             <div class="col">{{data.brochure}}</div>
             <div class="col col-lg-1 text-center"><button (click)="editSubject(data)" data-toggle="modal" data-target="#editUpdate"><i class="fa fa-pencil-square-o"></i></button></div>
             <div class="col col-lg-1 text-center"><button (click)="deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></div>
-            <div class="col col-lg-1 text-center">View Topics</div>
+            <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(allSubject.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))">View Topics</div>
 
-            <div class="w-100" *ngIf="data.Topics">
+            <div class="w-100" *ngIf="data.Topics" id="a{{ allSubject.indexOf(data)}}" class="collapse multi-collapse">
                 <div class="col">
                     <h4>Topics</h4>
                     <div class="row" *ngFor="let t of data.Topics">

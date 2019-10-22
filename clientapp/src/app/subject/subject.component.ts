@@ -32,9 +32,9 @@ export class SubjectComponent implements OnInit {
       this.allSubject = g.s;
     });
 
-    this.subjectService.getTopics().subscribe( (t) => {
-      this.allTopics = t.s;
-    });
+    // this.subjectService.getTopics().subscribe( (t) => {
+    //   this.allTopics = t.s;
+    // });
   }
 
   addSubject() {
@@ -93,6 +93,11 @@ export class SubjectComponent implements OnInit {
     this.subjectService.addingTopics(topicinfo).subscribe((t) => {
 
     });
+  }
+
+  getTargetId(id) {
+    // alert('#a' + id);
+    return '#a' + id;
   }
 
   deleteTopic(d, s) {

@@ -16,7 +16,9 @@ export class CourseComponent implements OnInit {
   description;
   duration;
   fee;
+  id;
   brochure = '';
+  brochureImage;
   keywords = [];
   courses;
   course;
@@ -29,7 +31,7 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.backend.getcourse().subscribe((p) => {
-      this.courses = p;
+      this.courses = p.docs;
     });
     this.subjectService.getSubject().subscribe( (g) => {
       this.allSubject = g.s;
@@ -37,17 +39,27 @@ export class CourseComponent implements OnInit {
   }
 
   addCourse() {
-    const data = { title: this.title,
-                  prerequisite: this.prerequisite,
-                  description: this.description,
-                  duration: this.duration,
-                  fee: this.fee,
-                  brochure: this.brochure,
-                  keywords: this.keywords
-                };
+    const fData = new FormData();
+    fData.set('title', this.title);
+    fData.set('brochureImage', this.brochureImage);
+    fData.set('prerequisite', this.prerequisite);
+    fData.set('description', this.description);
+    fData.set('fee', this.fee);
+    fData.set('keywords', this.keywords.toString());
+    console.log(fData);
+    // const data = { title: this.title,
+    //               prerequisite: this.prerequisite,
+    //               description: this.description,
+    //               duration: this.duration,
+    //               fee: this.fee,
+    //               brochure: this.brochure,
+    //               keywords: this.keywords
+    //             };
 
-    this.backend.postcourse(data).subscribe((d) => {
-      // console.log(data);
+    this.backend.postcourse(fData).subscribe((d) => {
+      this.backend.getcourse().subscribe((p) => {
+        this.courses = p;
+      });
     });
   }
 
@@ -72,4 +84,14 @@ export class CourseComponent implements OnInit {
     });
   }
 
+  getFile(f) {
+    this.brochureImage = f.target.files[0];
+  }
+
+  getTargetId(id) {
+    // alert('#a' + id);
+    return '#a' + id;
+  }
+
 }
+

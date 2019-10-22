@@ -1,0 +1,32 @@
+.tHead {
+    background: #efefef;
+}
+
+.tHead .col {
+    padding: 5px;
+}
+
+.tBodyRow {
+    border-bottom: 1px solid #efefef;
+}
+
+.tBodyRow:nth-child(2n+1) {
+    background: #efefef;
+}
+
+.tBodyRow > .col {
+    padding: 5px;
+}
+
+
+.subjects-list .row {
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.subject-wrapper {
+    padding: 10px 0;
+}
+
+.subject-wrapper h4 {
+    margin-bottom: 10px;
+}

@@ -15,32 +15,44 @@
 
 <div class="card">
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Prerequisite</th>
-                    <th>Description</th>
-                    <th>Duration</th>
-                    <th>Fee</th>
-                    <th>Brochure</th>
-                    <th>Keywords</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of courses">
-                    <td>{{data.title}}</td>
-                    <td>{{data.prerequisite}}</td>
-                    <td>{{data.description}}</td>
-                    <td>{{data.duration}}</td>
-                    <td>{{data.fee}}</td>
-                    <td>{{data.brochure}}</td>
-                    <td>{{data.keywords}}</td>
-                    <td><button (click)= "deleteCourse(data._id)"> <i class="fa fa-trash-o"></i> </button></td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="tHead row">
+                <div class="col p-1">Title</div>
+                <div class="col p-1">Prerequisite</div>
+                <div class="col p-1">Description</div>
+                <div class="col p-1">Duration</div>
+                <div class="col p-1">Fee</div>
+                <div class="col p-1">Brochure</div>
+                <div class="col p-1">Keywords</div>
+                <div class="col p-1 text-center">Edit</div>
+                <div class="col p-1 text-center">Delete</div>
+                <div class="col p-1"></div>
+            </div>
+            <div class="tBodyRow row" *ngFor="let data of courses">
+                    <div class="col p-1">{{data.title}}</div>
+                    <div class="col p-1">{{data.prerequisite}}</div>
+                    <div class="col p-1">{{data.description}}</div>
+                    <div class="col p-1">{{data.duration}}</div>
+                    <div class="col p-1">{{data.fee}}</div>
+                    <div class="col p-1"><a href="http://localhost:3000/{{data._id}}{{data.brochureExt}}">view</a></div>
+                    <div class="col p-1">{{data.keywords}}</div>
+                    <div class="col p-1 text-center"><i class="fa fa-pencil-square"></i></div>
+                    <div class="col p-1 text-center"><button (click)= "deleteCourse(data._id)"> <i class="fa fa-trash-o"></i> </button></div>
+                    <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(courses.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))">View Subjects</div>
+                    <div class="col-12 subjects-list mb-2 collapse multi-collapse" *ngIf="data.subject_Details != '' " id="a{{ courses.indexOf(data)}}">
+                        <div class="subject-wrapper">
+                            <h4>Subjects</h4>
+                            <div class="row px-2" *ngFor="let d of data.subject_Details">
+                                <div class="col p-1">{{data.subject_Details.indexOf(d) + 1}}</div>
+                                <div class="col p-1">{{d.title}}</div>
+                                <div class="col p-1">{{data.duration}}</div>
+                                <div class="col p-1">{{data.description}}</div>
+                                <div class="col p-1"></div>
+                                <div class="col p-1"></div>
+                                <div class="col p-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 </div>
 
@@ -90,19 +102,19 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">Brochure</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="brochure" [(ngModel)]="brochure" >
+                            <input class="form-control" (change)="getFile( $event )" type="file" name="brochure" [(ngModel)]="brochure" >
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Keywords</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="keywords" [(ngModel)]="keywords" >
+                            <input class="form-control"  type="text" name="keywords" [(ngModel)]="keywords" >
                         </div>
                     </div>                        
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="addCourse()">Add Course</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addCourse()">Add Course</button>
                 </div>
             </form>
           </div>
