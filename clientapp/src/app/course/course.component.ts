@@ -74,6 +74,7 @@ export class CourseComponent implements OnInit {
   }
 
   editCourseUpdate() {
+    alert('edit course update begining ');
     const fData = new FormData();
     fData.set('title', this.title);
     fData.set('brochureImage', this.brochureImage);
