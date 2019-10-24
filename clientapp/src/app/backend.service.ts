@@ -8,7 +8,7 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  getcourse():any {
+  getcourse(): any {
     return this.http.get('http://localhost:3000/get-course');
   }
 
@@ -16,6 +16,11 @@ export class BackendService {
     console.log('Backend Hit');
     return this.http.post('http://localhost:3000/post-course', data);
   }
+
+  postEditcourse(data) {
+    return this.http.post('http://localhost:3000/post-edit-course', data);
+  }
+
 
   deletecourse(data) {
     return this.http.post('http://localhost:3000/delete-course', data);

@@ -46,7 +46,7 @@ export class CourseComponent implements OnInit {
     fData.set('description', this.description);
     fData.set('fee', this.fee);
     fData.set('keywords', this.keywords.toString());
-    console.log(fData);
+    // console.log(fData);
     // const data = { title: this.title,
     //               prerequisite: this.prerequisite,
     //               description: this.description,
@@ -58,7 +58,33 @@ export class CourseComponent implements OnInit {
 
     this.backend.postcourse(fData).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
-        this.courses = p;
+        this.courses = p.docs;
+      });
+    });
+  }
+
+  editCourse(e) {
+    this.title = e.title;
+    this.prerequisite = e.prerequisite;
+    this.description = e.description;
+    this.duration = e.duration;
+    this.fee = e.fee;
+    this.keywords = e.keywords;
+    // this.brochureExt = e.brochureExt;
+  }
+
+  editCourseUpdate() {
+    const fData = new FormData();
+    fData.set('title', this.title);
+    fData.set('brochureImage', this.brochureImage);
+    fData.set('prerequisite', this.prerequisite);
+    fData.set('description', this.description);
+    fData.set('fee', this.fee);
+    fData.set('keywords', this.keywords.toString());
+    console.log(fData);
+    this.backend.postcourse(fData).subscribe((d) => {
+      this.backend.getcourse().subscribe((p) => {
+        this.courses = p.docs;
       });
     });
   }
@@ -66,7 +92,7 @@ export class CourseComponent implements OnInit {
   deleteCourse(i) {
     this.backend.deletecourse({id: i}).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
-        this.courses = p;
+        this.courses = p.docs;
       });
     });
   }
@@ -89,8 +115,15 @@ export class CourseComponent implements OnInit {
   }
 
   getTargetId(id) {
-    // alert('#a' + id);
     return '#a' + id;
+  }
+
+  editCourseSubject() {
+
+  }
+
+  deleteCourseSubject() {
+
   }
 
 }

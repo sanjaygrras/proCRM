@@ -125,35 +125,6 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
     });
 })
 
-
-app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
-
-    req.body.brochureExt=req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-    let collection_instance = connection.db('procrm').collection('courses');
-    // {_id:ObjectId(req.body._id)}, { $set:{ name:req.body.name,
-    collection_instance.updateOne(
-                                    {_id:ObjectId(req.body._id)}, 
-                                    { $set:{ title:req.body.title}}, (err, data) => {
-        if(err){
-            res.send({status:"failed", message : "course could not be created"});
-            
-        }
-        else{
-            var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-           
-            fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
-                if(!err)
-                {
-                    res.send({status:"ok", message:"course created succeffully" } );
-                }
-                else{
-                    res.send({status:"failed", message : "somer error occured in file renaming"})
-                }
-            });
-            }
-    });
-})
-
 app.post('/delete-course', bodyParser.json(), (req,res)=>{
     
     let collection_instance = connection.db('procrm').collection('courses');

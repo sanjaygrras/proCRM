@@ -133,7 +133,7 @@ app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
     // {_id:ObjectId(req.body._id)}, { $set:{ name:req.body.name,
     collection_instance.updateOne(
                                     {_id:ObjectId(req.body._id)}, 
-                                    { $set:{ title:req.body.title}}, (err, data) => {
+                                    { $set:{ name:req.body.name}}, (err, data) => {
         if(err){
             res.send({status:"failed", message : "course could not be created"});
             
