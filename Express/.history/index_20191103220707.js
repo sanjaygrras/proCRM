@@ -383,7 +383,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
-
+    console.log("Express Hit");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)

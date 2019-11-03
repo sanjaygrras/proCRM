@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { DataService } from '../data.service';
 import { stringify } from 'querystring';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-course',
@@ -19,6 +20,7 @@ export class CourseComponent implements OnInit {
   id;
   brochure = '';
   brochureImage;
+  brochureExt;
   keywords = [];
   courses;
   course;
@@ -27,6 +29,7 @@ export class CourseComponent implements OnInit {
   subjectId;
   coursesName: any;
   courseId;
+  del;
   constructor(private backend: BackendService, private subjectService: DataService) { }
 
   ngOnInit() {
@@ -46,15 +49,6 @@ export class CourseComponent implements OnInit {
     fData.set('description', this.description);
     fData.set('fee', this.fee);
     fData.set('keywords', this.keywords.toString());
-    // console.log(fData);
-    // const data = { title: this.title,
-    //               prerequisite: this.prerequisite,
-    //               description: this.description,
-    //               duration: this.duration,
-    //               fee: this.fee,
-    //               brochure: this.brochure,
-    //               keywords: this.keywords
-    //             };
 
     this.backend.postcourse(fData).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
@@ -70,20 +64,22 @@ export class CourseComponent implements OnInit {
     this.duration = e.duration;
     this.fee = e.fee;
     this.keywords = e.keywords;
-    // this.brochureExt = e.brochureExt;
+    this.brochureExt = e.brochureExt;
+    this.id = e._id;
   }
 
   editCourseUpdate() {
-    alert('edit course update begining ');
     const fData = new FormData();
     fData.set('title', this.title);
+    fData.set('_id', this.id);
     fData.set('brochureImage', this.brochureImage);
+    fData.set('oldBrochureExt', this.brochureExt);
     fData.set('prerequisite', this.prerequisite);
     fData.set('description', this.description);
     fData.set('fee', this.fee);
     fData.set('keywords', this.keywords.toString());
-    console.log(fData);
-    this.backend.postcourse(fData).subscribe((d) => {
+
+    this.backend.postEditcourse(fData).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
         this.courses = p.docs;
       });
@@ -104,11 +100,30 @@ export class CourseComponent implements OnInit {
         subjectId: this.subjectId,
       };
 
-    //alert(stringify(cAdd));
-
-    this.backend.subjectInCourse(cAdd).subscribe( (s) => {
-      console.log( ' Successfully updated' );
+    // checking that new subject is already added or not.
+    const currentCourse = this.courses.filter((ele) => {
+      if (ele._id === this.courseId){
+        return true;
+      }
     });
+
+    const isExist = currentCourse[0].subjects.some((ele) => {
+      if ( ele === this.subjectId) { return true; }
+    });
+
+    if (isExist)  {
+         alert('Subject Already Exist');
+    } else  {
+
+      this.backend.subjectInCourse(cAdd).subscribe( (s) => {
+        // console.log( ' Successfully updated' );
+        this.backend.getcourse().subscribe((p) => {
+          this.courses = p.docs;
+        });
+      });
+    }
+
+
   }
 
   getFile(f) {
@@ -119,12 +134,16 @@ export class CourseComponent implements OnInit {
     return '#a' + id;
   }
 
-  editCourseSubject() {
-
-  }
-
-  deleteCourseSubject() {
-
+  deleteCourseSubject(d, b) {
+    const dSub = {subjectId: d, courseId: b };
+    this.backend.subjectInCourseDel(dSub).subscribe( (d) => {
+      if ( d.status === 'ok') {
+        // console.log(' Deleted successfully ');
+        this.backend.getcourse().subscribe((p) => {
+          this.courses = p.docs;
+        });
+      }
+    });
   }
 
 }

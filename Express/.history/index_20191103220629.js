@@ -294,9 +294,9 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 
 app.post('/delete-roles', bodyParser.json(), (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
-
+    console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
-
+    console.log(id);
     collection_instance.deleteOne(id, (err,obj)=>{
         if(err){
             console.log('Something went wrong');
@@ -310,7 +310,7 @@ app.post('/delete-roles', bodyParser.json(), (req,res)=>{
 
 // by sanjay rathore till 187
 app.get('/getPermisions/:role', (req,res)=>{
-
+console.log(req.params.role);
     let collection = connection.db('procrm').collection('roles');
     collection.find({role:req.params.role}).toArray((err,docs)=>{
         if(!err)
@@ -324,7 +324,7 @@ app.get('/getPermisions/:role', (req,res)=>{
 })
 
 app.get('/getAllFeatures', (req,res)=>{
-
+    // console.log(req.params.role);
     let collection = connection.db('procrm').collection('crm_features');
     collection.find().toArray((err,docs)=>{
         if(!err)
@@ -383,7 +383,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
-
+    console.log("Express Hit");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)

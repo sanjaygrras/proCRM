@@ -135,8 +135,7 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
 
 app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
 
-    console.log(req.body);
-    console.log(req.file);
+    console.log(req);
     let collection_instance = connection.db('procrm').collection('courses');
 
     if(req.file)
@@ -145,27 +144,17 @@ app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
     
     collection_instance.updateOne(
                         {_id:ObjectId(req.body._id)}, 
-                        { $set:{title:req.body.title, prerequisite:req.body.prerequisite, description:req.body.description,fee:req.body.fee,keywords:req.body.keywords,brochureExt:req.body.brochureExt}}, (err, data) => {
+                        { $set:req.body}, (err, data) => {
         if(err){
-            console.log("error occured");
             res.send({status:"failed", message : "course could not be created"});
             
         }
         else{
-
-            console.log(" no error and 156");
             var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
            //delete
-           
            console.log(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt)); 
-           try{
            fs.unlinkSync(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt));
-           }
-           catch(e)
-           {
-                console.log("some Error occured");
-           }
-           console.log("new name is "+path.join(__dirname, 'uploads',req.body._id+ext));
+            
             fs.rename(path.join(__dirname,'uploads','temp'+ext),path.join(__dirname, 'uploads',req.body._id+ext), (err)=>{
                 if(!err)
                 {
@@ -188,7 +177,7 @@ else{
 
 
 
-console.log("line 185");
+
 
 
     
@@ -246,6 +235,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
+    console.log(req.body);
     let collection = connection.db('procrm').collection('courses');
     collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:ObjectId(req.body.subjectId)}}, (notOk,ok) => {
 
@@ -257,17 +247,7 @@ app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
     });
 });
 
-app.post('/subject-in-course-del',bodyParser.json(), (req,res) => {
-    let collection = connection.db('procrm').collection('courses');
-    collection.updateOne({_id:ObjectId(req.body.courseId)},{$pull:{subjects:ObjectId(req.body.subjectId)}},(err,r) => {
-        if(!err && r) {
-            res.send({status:"ok", msg:"subject remove Successfully", data:r});
-        }
-        else {
-            res.send({status:"failed", msg:"some error occured", data:err});
-        }
-    })
-})
+
 
 app.get('/get-roles', (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
@@ -285,8 +265,10 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 
     collection_instance.insert(req.body, (err,abc) => {
         if(!err) {
+            console.log('insrted');
             res.send({status:'ok'});
         } else {
+            console.log('getting error');
             res.send({status:'failed'});
         }
     })
@@ -294,9 +276,9 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 
 app.post('/delete-roles', bodyParser.json(), (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
-
+    console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
-
+    console.log(id);
     collection_instance.deleteOne(id, (err,obj)=>{
         if(err){
             console.log('Something went wrong');
@@ -310,7 +292,7 @@ app.post('/delete-roles', bodyParser.json(), (req,res)=>{
 
 // by sanjay rathore till 187
 app.get('/getPermisions/:role', (req,res)=>{
-
+console.log(req.params.role);
     let collection = connection.db('procrm').collection('roles');
     collection.find({role:req.params.role}).toArray((err,docs)=>{
         if(!err)
@@ -324,7 +306,7 @@ app.get('/getPermisions/:role', (req,res)=>{
 })
 
 app.get('/getAllFeatures', (req,res)=>{
-
+    // console.log(req.params.role);
     let collection = connection.db('procrm').collection('crm_features');
     collection.find().toArray((err,docs)=>{
         if(!err)
@@ -383,7 +365,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
-
+    console.log("Express Hit");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)

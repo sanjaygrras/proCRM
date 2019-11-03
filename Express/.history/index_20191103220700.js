@@ -324,7 +324,7 @@ app.get('/getPermisions/:role', (req,res)=>{
 })
 
 app.get('/getAllFeatures', (req,res)=>{
-
+    // console.log(req.params.role);
     let collection = connection.db('procrm').collection('crm_features');
     collection.find().toArray((err,docs)=>{
         if(!err)
@@ -383,7 +383,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
-
+    console.log("Express Hit");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)

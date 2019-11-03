@@ -246,6 +246,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
+    console.log(req.body);
     let collection = connection.db('procrm').collection('courses');
     collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:ObjectId(req.body.subjectId)}}, (notOk,ok) => {
 
@@ -257,17 +258,7 @@ app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
     });
 });
 
-app.post('/subject-in-course-del',bodyParser.json(), (req,res) => {
-    let collection = connection.db('procrm').collection('courses');
-    collection.updateOne({_id:ObjectId(req.body.courseId)},{$pull:{subjects:ObjectId(req.body.subjectId)}},(err,r) => {
-        if(!err && r) {
-            res.send({status:"ok", msg:"subject remove Successfully", data:r});
-        }
-        else {
-            res.send({status:"failed", msg:"some error occured", data:err});
-        }
-    })
-})
+
 
 app.get('/get-roles', (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
@@ -285,8 +276,10 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 
     collection_instance.insert(req.body, (err,abc) => {
         if(!err) {
+            console.log('insrted');
             res.send({status:'ok'});
         } else {
+            console.log('getting error');
             res.send({status:'failed'});
         }
     })
@@ -294,9 +287,9 @@ app.post('/post-roles', bodyParser.json(), (req,res)=> {
 
 app.post('/delete-roles', bodyParser.json(), (req,res)=>{
     let collection_instance = connection.db('procrm').collection('roles');
-
+    console.log(req.body);
     let id = { _id : new mongo.ObjectID(req.body.id)};
-
+    console.log(id);
     collection_instance.deleteOne(id, (err,obj)=>{
         if(err){
             console.log('Something went wrong');
@@ -310,7 +303,7 @@ app.post('/delete-roles', bodyParser.json(), (req,res)=>{
 
 // by sanjay rathore till 187
 app.get('/getPermisions/:role', (req,res)=>{
-
+console.log(req.params.role);
     let collection = connection.db('procrm').collection('roles');
     collection.find({role:req.params.role}).toArray((err,docs)=>{
         if(!err)
@@ -324,7 +317,7 @@ app.get('/getPermisions/:role', (req,res)=>{
 })
 
 app.get('/getAllFeatures', (req,res)=>{
-
+    // console.log(req.params.role);
     let collection = connection.db('procrm').collection('crm_features');
     collection.find().toArray((err,docs)=>{
         if(!err)
@@ -383,7 +376,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
 })
 
 app.post('/user-register', bodyParser.json(), (req,res)=>{
-
+    console.log("Express Hit");
+    console.log(req.body);
     let collection = connection.db('procrm').collection('users');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)
@@ -537,7 +531,17 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
     })
 })
 
-
+app.post('/subject-in-course-del',bodyParser.json(), (req,res) => {
+    let collection = connection.db('procrm').collection('subjects');
+    collection.deleteOne({_id:ObjectId(req.body.d)},(err,r)=>{
+        if(!err && r) {
+            res.send({status:"ok", msg:"Topic updated Successfully", data:r});
+        }
+        else {
+            res.send({status:"failed", msg:"some error occured", data:err});
+        }
+    })
+})
 
 
 app.listen(3000,()=>{
