@@ -542,7 +542,7 @@ app.post('/student-new-lead', bodyParser.json(), (req,res) => {
     let collection = connection.db(procrm).collection('student_lead');
     collection.insertOne(req.body, (notOk,ok) => {
         if(!notOk && ok) {
-            res.send({status:"ok", msg:"Lead added Successfully", s:ok})
+            res.send({status:"ok", msg:"Subject added Successfully", s:ok})
         } else {
             res.send({status:"error", msg:"Getting errors", s:notOk})
         }

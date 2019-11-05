@@ -36,9 +36,9 @@
                 <div class="col p-1">{{data.keywords}}</div>
                 <div class="col p-1 text-center">
                     <button (click)="editCourse(data)" data-toggle="modal" data-target="#editCourse"><i class="fa fa-pencil-square"></i></button> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button (click)= "deleteCourse(data._id)"> <i class="fa fa-trash-o"></i> </button>
+                    <button (click)="deleteCourse(data._id)"> <i class="fa fa-trash-o"></i> </button>
                 </div>
-                <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(courses.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))"><i class="fa fa-angle-down"></i> </div>
+                <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(courses.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))"><i *ngIf="data.subject_Details != ''" class="fa fa-angle-down"></i> </div>
                 <div class="col-12 subjects-list mb-2 collapse multi-collapse" *ngIf="data.subject_Details != '' " id="a{{ courses.indexOf(data)}}">
                     <div class="subject-wrapper">
                         <h4>Subjects</h4>

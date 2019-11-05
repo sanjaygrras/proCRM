@@ -1,76 +1,67 @@
 
 <div class="container">
     <div class="row">
-        <div class="left-pane col-sm-8">
-            <div class="card mb-4 agenda">
-                <h3 class="mb-0 px-4 pt-4">Agenda</h3>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="yesterday">Yesterday's ToDo List</th>
-                                <th class="today">Today's ToDo List</th>
-                                <th class="tomorrow">Tomorrow's ToDo List</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>....</td>
-                                <td>....</td>
-                                <td>....</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card mb-4 attendance">
-                <h3 class="mb-0 px-4 pt-4">Attendance/ Raise Leave Request</h3>
-                <div class="card-body">
-                    <div class="calender">calender Marking Attendance</div>
-                </div>
-            </div>
-            
-            <div class="card mb-4 extra">
-                <h3 class="mb-0 px-4 pt-4">Extra Reading Material ( PDFs, Links, Blogs, RSS Feeds)</h3>
-                <div class="card-body">
-                    ...................
-                </div>
-            </div>
-    
+        <div class="col-sm-6">
+            <h1 class="mb-3">Student</h1>
         </div>
-        
-        <div class="right-pane col-sm-4">
-        
-            <div class="card mb-4 directory">
-                <h3 class="mb-0 px-4 pt-4">Mean</h3>
-                <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li><a href="#" target="_blank" rel="noopener noreferrer">MongoDB</a></li>
-                        <li><a href="#" target="_blank" rel="noopener noreferrer">Express</a></li>
-                        <li><a href="#" target="_blank" rel="noopener noreferrer">Angular</a></li>
-                        <li><a href="#" target="_blank" rel="noopener noreferrer">NodeJS</a></li>
-                    </ul>
-                </div>
-            </div>
-        
-            <div class="card mb-4 question">
-                <h3 class="mb-0 px-4 pt-4">Raise Question/ Add Topic</h3>
-                <div class="card-body">
-                    <div class="form-group">
-                    <input class="form-control mb-2" type="text" placeholder="Questions / Topics" name="" id="">
-                    <button class="btn btn-success">Submit</button>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="card mb-4 feedback">
-                <h3 class="mb-0 px-4 pt-4">Feedback</h3>
-                <div class="card-body">
-                <input class="form-control mb-2" type="text" placeholder="Feedback" name="" id="">
-                <button class="btn btn-success">Submit</button>
-                </div>
-            </div>
+        <div class="col-sm-6 text-right">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#newEnquiry">
+                New Enquiry
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubject">
+               Add Student
+            </button>    
         </div>
     </div>
-</div>
+    
+
+
+
+<!-- New Lead -->
+<div class="new-lead-form-wrapper">    
+        <div class="modal fade" id="newEnquiry" tabindex="-1" role="dialog" aria-labelledby="newEnquiry" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">New Enquiry</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form #courseadd="ngForm">
+                  <div class="modal-body">
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Name</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sName" [(ngModel)]="sName" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Email</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sEmail" [(ngModel)]="sEmail" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Mobile</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sMobile" [(ngModel)]="sMobile" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Course Request</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sRequest" [(ngModel)]="sRequest" >
+                          </div>
+                      </div>       
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentQuery()">Add Student Query</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+  </div>

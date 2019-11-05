@@ -25,7 +25,6 @@
             <div class="col">Name</div>
             <div class="col">Duration</div>
             <div class="col">Description</div>
-            <div class="col">Brochure</div>
             <div class="col col-lg-1 text-center">Edit</div>
             <div class="col col-lg-1 text-center">Delete</div>
             <div class="col col-lg-1 text-center"></div>
@@ -34,15 +33,14 @@
             <div class="col">{{data.title}}</div>
             <div class="col">{{data.duration}}</div>
             <div class="col">{{data.description}}</div>
-            <div class="col">{{data.brochure}}</div>
             <div class="col col-lg-1 text-center"><button (click)="editSubject(data)" data-toggle="modal" data-target="#editUpdate"><i class="fa fa-pencil-square-o"></i></button></div>
             <div class="col col-lg-1 text-center"><button (click)="deleteSubject(data._id)"> <i class="fa fa-trash-o"></i> </button></div>
-            <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(allSubject.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))">View Topics</div>
+            <div class="col col-lg-1 text-center" data-toggle="collapse" [attr.data-target]="getTargetId(allSubject.indexOf(data))" aria-expanded="false" aria-controls="getTargetId(allSubject.indexOf(data))"><i *ngIf="data.Topics" class="fa fa-angle-down"></i></div>
 
-            <div class="w-100" *ngIf="data.Topics" id="a{{ allSubject.indexOf(data)}}" class="collapse multi-collapse">
-                <div class="col">
+            <div class="col-12 subjects-list mb-2 collapse multi-collapse" *ngIf="data.Topics" id="a{{ allSubject.indexOf(data)}}">
+                <div class="subject-wrapper">
                     <h4>Topics</h4>
-                    <div class="row" *ngFor="let t of data.Topics">
+                    <div class="row px-2" *ngFor="let t of data.Topics">
                         <div class="col col-sm-1">{{ data.Topics.indexOf(t) + 1 }}</div>
                         <div class="col">{{t.topicTitle}}</div>
                         <div class="col">{{t.topicDuration}}</div>

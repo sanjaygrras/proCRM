@@ -538,28 +538,15 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
 })
 
 app.post('/student-new-lead', bodyParser.json(), (req,res) => {
-    console.log(req.body);
     let collection = connection.db(procrm).collection('student_lead');
-    collection.insertOne(req.body, (notOk,ok) => {
-        if(!notOk && ok) {
-            res.send({status:"ok", msg:"Lead added Successfully", s:ok})
-        } else {
-            res.send({status:"error", msg:"Getting errors", s:notOk})
+    collection.insertOne(req.body, (err,ok)=>{
+        if(!err && ok) {
+            res.send({status:"ok", msg:"Student lead updated Successfully", q:ok});
+        }
+        else {
+            res.send({status:"failed", msg:"some error occured", q:err});
         }
     });
-})
-
-app.get('/get-lead',(req,res) => {
-    let collection = connection.db(procrm).collection('student_lead');
-    collection.find().toArray((err,docs)=>{
-        if(!err)
-        {
-            res.send({status:"ok", msg:"data fetched successfully", data:docs})
-        }
-        else{
-            res.send({status:"failed", msg:"some error occured", data:err})
-        }
-    })    
 })
 
 

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BackendService {
-
+  baseUrl = 'http://localhost:3000/';
   constructor(private http: HttpClient) { }
 
   getcourse(): any {
@@ -43,8 +43,16 @@ export class BackendService {
   }
 
   subjectInCourseDel(d): any {
-    console.log('inService' + JSON.stringify(d));
+    // console.log('inService' + JSON.stringify(d));
     return this.http.post('http://localhost:3000/subject-in-course-del', d);
+  }
+
+  addQuery(q): any {
+    return this.http.post('http://localhost:3000/student-new-lead', q);
+  }
+
+  getLead() {
+    return this.http.get('http://localhost:3000/get-lead');
   }
 
 }
