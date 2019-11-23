@@ -1,0 +1,20 @@
+export class StudentModel
+{
+    msg;
+    sName;
+    sEmail;
+    sMobile;
+    sRequest;
+    getLead;
+    id;
+    fResult;
+    nDate;
+    followupTitle;
+    followupId;
+    leadSource;
+    courses;
+    sCourse;
+    sAddress;
+    sPhoto;
+    title;
+}

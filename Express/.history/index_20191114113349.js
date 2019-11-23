@@ -548,10 +548,10 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
     req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
     
     let collection = connection.db('procrm').collection('student');
-    collection.insertOne(req.body, (err,data) => {
-        if(err)
+    connection.insertOne(req.body, (err,docs) => {
+        if(!err)
         {
-            res.send({status:"ok", msg:"getting error", data:docs})
+            res.send({status:"ok", msg:"Students inserted successfully", data:docs})
         }
         else{
             var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));

@@ -26,7 +26,6 @@ export class StudentComponent implements OnInit {
   sPhoto;
   sPhotoExt;
   title;
-  tDate = new Date();
   constructor(private studentService: BackendService) { }
 
   ngOnInit() {
@@ -106,9 +105,9 @@ export class StudentComponent implements OnInit {
     fData.set('sCourse', this.sCourse);
     fData.set('sAddress', this.sAddress);
     fData.set('sPhoto', this.sPhoto);
-    // fData.set('sPhotoExt', 'this.sPhotoExt');
+    fData.set('sPhotoExt', this.sPhotoExt);
 
-    console.log(fData.get('sPhoto'));
+    console.log(fData.get('sPhotoExt'));
 
     this.studentService.registerStudentPush( fData ).subscribe( (s) => {
 

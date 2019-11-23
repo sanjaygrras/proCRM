@@ -49,6 +49,42 @@ app.use(cors()); // Allow multi domain access to express server
 
 app.use(express.static(path.join(__dirname,'uploads')));
 
+// app.get('/db', (req,res)=>{ // Send the entire collection of student info
+//     let collection_instance = connection.db('procrm').collection('student');
+//     collection_instance.find().toArray((err,docs)=>{
+//         if(!err)
+//             res.send(docs);
+//     })
+// })
+
+// // Insert data requires adjustment
+// app.post('/insertdata', bodyParser.json(), (req,res)=>{
+//     let name = req.body.name ;
+//     let age = req.body.age ;
+//     let course = req.body.course;
+//     let doc = {name, age, course};
+//     console.log(doc);
+//     let collection_instance = connection.db('procrm').collection('student');
+//     collection_instance.insertOne(doc, (err, records)=>{
+//         if(err){
+//             console.log("Something went wrong");
+//         }
+//     });
+//     res.send({status: 'Record added'});
+// })
+
+// // Delete data requires ID of the object
+// app.post('/delete', bodyParser.json(), (req,res)=>{
+// let id = { _id : new mongo.ObjectID(req.body.id) };
+//     console.log(id);
+//     let collection_instance = connection.db('procrm').collection('student');
+//     collection_instance.deleteOne(id, (err, obj)=>{
+//         if(err){
+//             console.log("Something went wrong");
+//         }
+//         console.log('Deleted');
+//     })
+// })
 
 // let courses=[{title:"Mean Stack", prerequisite:"HTML,CSS,JS",description:"Something",duration:"3 Months",fee:"15000",brochure:"Something",keywords:"Web,Web Dev"}];
 app.get('/get-course', (req,res)=>{
@@ -527,13 +563,14 @@ app.get('/get-lead',(req,res) => {
 
 
 app.post('/folloup-student',bodyParser.json(), (req,res) => {
+    console.log(req.body);
     let collection = connection.db('procrm').collection('student_lead');
     collection.updateOne({_id:ObjectId(req.body.followupId)},{$push: {followup:{
-                followup_result:req.body.fResult, next_date:req.body.nDate, followupTitle:req.body.followupTitle, 
-                currentDate:req.body.currentDate
+                followup_result:req.body.fResult, next_date:req.body.nDate, followupTitle:req.body.followupTitle, currentDate:req.body.currentDate
             }}}, (err,docs) => {
         if(!err)
         {
+            console.log(docs);
             res.send({status:"ok", msg:"Followup updated successfully", data:docs})
         }
         else{
@@ -541,32 +578,6 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
         } 
     }
     )
-})
-
-app.post('/student-register', upload.single('sPhoto'), (req,res) => {
-    console.log(req.body);
-    req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-    
-    let collection = connection.db('procrm').collection('student');
-    collection.insertOne(req.body, (err,data) => {
-        if(err)
-        {
-            res.send({status:"ok", msg:"getting error", data:docs})
-        }
-        else{
-            var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-           
-            fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
-                if(!err)
-                {
-                    res.send({status:"ok", message:"course created succeffully" } );
-                }
-                else{
-                    res.send({status:"failed", message : "somer error occured in file renaming"})
-                }
-            });
-        }
-    })
 })
 
 

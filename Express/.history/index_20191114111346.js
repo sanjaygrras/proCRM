@@ -543,31 +543,6 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
     )
 })
 
-app.post('/student-register', upload.single('sPhoto'), (req,res) => {
-    console.log(req.body);
-    req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-    
-    let collection = connection.db('procrm').collection('student');
-    collection.insertOne(req.body, (err,data) => {
-        if(err)
-        {
-            res.send({status:"ok", msg:"getting error", data:docs})
-        }
-        else{
-            var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-           
-            fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
-                if(!err)
-                {
-                    res.send({status:"ok", message:"course created succeffully" } );
-                }
-                else{
-                    res.send({status:"failed", message : "somer error occured in file renaming"})
-                }
-            });
-        }
-    })
-})
 
 
 app.listen(3000,()=>{

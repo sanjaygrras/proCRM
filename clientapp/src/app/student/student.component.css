@@ -1,0 +1,153 @@
+.tHead {
+    background: #efefef;
+}
+
+.tHead .col {
+    padding: 5px;
+}
+
+.tBodyRow {
+    border-bottom: 1px solid #efefef;
+}
+
+.tBodyRow:nth-child(2n+1) {
+    background: #efefef;
+}
+
+.tBodyRow > .col {
+    padding: 5px;
+}
+
+
+.subjects-list .row {
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.subject-wrapper {
+    padding: 10px 0;
+}
+
+.subject-wrapper h4 {
+    margin-bottom: 10px;
+}
+
+.followup-form-wrapper .followup-info input {
+    border: none;
+    width: auto;
+    font-size: 16px;
+    background: none;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
+
+.followUpList .modal-body {
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+}
+
+
+/* -------------------------------------
+ * timeline
+ * ------------------------------------- */
+ #timeline {
+    list-style: none;
+    margin: 0 0 30px 120px;
+    padding-left: 30px;
+    border-left: 4px solid #eee9dc;
+  }
+  #timeline li {
+    margin: 0px 0 20px 0;
+    position: relative;
+  }
+  #timeline p {
+    margin: 0 0 15px;
+  }
+  
+  .date {
+    margin-top: -10px;
+    top: 50%;
+    left: -158px;
+    font-size: 0.95em;
+    line-height: 20px;
+    position: absolute;
+  }
+  
+  .circle {
+    margin-top: -10px;
+    top: 50%;
+    left: -38px;
+    width: 14px;
+    height: 14px;
+    background: #eee9dc;
+    border: 3px solid #39d612;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+  }
+  
+  .content {
+    max-height: 20px;
+    padding: 50px 20px 0;
+    border-color: transparent;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.5em;
+    position: relative;
+  }
+  .content:before, .content:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border: solid transparent;
+    position: absolute;
+    pointer-events: none;
+    right: 100%;
+  }
+  .content:before {
+    border-right-color: inherit;
+    border-width: 20px;
+    top: 50%;
+    margin-top: -20px;
+  }
+  .content:after {
+    border-right-color: #ffffff;
+    border-width: 17px;
+    top: 50%;
+    margin-top: -17px;
+  }
+  
+  label {
+    font-size: 1.3em;
+    position: absolute;
+    z-index: 100;
+    cursor: pointer;
+    top: 20px;
+    transition: transform 0.2s linear;
+  }
+  
+  .radio {
+    display: none;
+  }
+  
+  .relative label {
+    cursor: auto;
+    transform: translateX(42px);
+  }
+  .relative label span {
+      font-size: 90%;
+      color:#39d612;
+  }
+
+  #timeline .content {
+    max-height: 180px;
+    border-color: #eee9dc;
+    margin-right: 20px;
+    transform: translateX(20px);
+    transition: max-height 0.4s linear, border-color 0.5s linear, transform 0.2s linear;
+  }
+  #timeline .content p {
+    max-height: 200px;
+    transition: color 0.3s linear 0.3s;
+  }

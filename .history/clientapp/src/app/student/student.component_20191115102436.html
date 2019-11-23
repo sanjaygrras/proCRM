@@ -1,0 +1,244 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="mb-3">Student</h1>
+        </div>
+        <div class="col-sm-6 text-right">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#newEnquiry">
+                New Enquiry
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSubject">
+               Add Student
+            </button>    
+        </div>
+    </div>
+    
+
+<div class="card">
+    <div class="card-body">
+        <div class="tHead row">
+            <div class="col-2 p-1">Name</div>
+            <div class="col-3 p-1">Email</div>
+            <div class="col p-1">Mobile</div>
+            <div class="col-2 p-1">Query</div>
+            <div class="col p-1"></div>
+            <div class="col p-1"></div>
+            <div class="col p-1">Register</div>
+        </div>
+        <div class="tBodyRow row" *ngFor="let data of getLead">
+            <div class="col-2 p-1">{{data.sName}}</div>
+            <div class="col-3 p-1">{{data.sEmail}}</div>
+            <div class="col p-1">{{data.sMobile}}</div>
+            <div class="col-2 p-1">{{data.sRequest}}</div>
+            <div class="col p-1"><button class="btn btn-success" data-target="#followUp" data-toggle="modal" (click)="leadProcess(data)">Follow up</button></div>
+            <div class="col p-1"><button class="btn btn-pirmary" [attr.data-target]="getTargetId(getLead.indexOf(data))" data-toggle="modal">View History</button></div>
+            <div class="col p-1"><button class="btn btn-success" data-toggle="modal" data-target="#register" (click)="newStudent(data)">Register</button></div>
+            <div class="col-12" *ngIf="data.followup">
+                <div class="modal fade followUpList" id="a{{ getLead.indexOf(data) }}" tabindex="-1" role="dialog" aria-labelledby="followUpList" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form #courseadd="ngForm">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Follow up </h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul id='timeline'>
+                                        <li class='work' *ngFor="let follow of data.followup.reverse()">
+                                        <input class='radio' id='work5' name='works' type='radio' checked>
+                                        <div class="relative">
+                                            <label for='work5'>{{ follow.followupTitle }} | <span>{{ follow.next_date }}</span></label>
+                                            <span class='date'>{{ follow.currentDate|date }}</span>
+                                            <span class='circle'></span>
+                                        </div>
+                                        <div class='content'>
+                                            <p> {{ follow.followup_result }}</p>
+                                        </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateLead()">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Lead Add -->
+<div class="new-lead-form-wrapper">    
+        <div class="modal fade" id="newEnquiry" tabindex="-1" role="dialog" aria-labelledby="newEnquiry" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">New Enquiry</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form #courseadd="ngForm">
+                  <div class="modal-body">
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Name</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sName" [(ngModel)]="sName" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Email</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sEmail" [(ngModel)]="sEmail" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Mobile</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sMobile" [(ngModel)]="sMobile" >
+                          </div>
+                      </div>
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Student Course Request</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="text" name="sRequest" [(ngModel)]="sRequest" >
+                          </div>
+                      </div>    
+                      <div class="row mb-2">
+                        <div class="col-sm-4">Lead Source</div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="leadSource" [(ngModel)]="leadSource" >
+                        </div>
+                    </div>    
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="studentQuery()">Add Student Query</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+  </div>
+
+
+  <!-- Follow Up -->
+<div class="followup-form-wrapper">    
+        <div class="modal fade" id="followUp" tabindex="-1" role="dialog" aria-labelledby="followUp" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form #courseadd="ngForm">
+                  <div class="modal-body">
+                    <div class="row followup-info alert alert-info mb-2">
+                        <div class="col-6"><input class="" type="text" name="sName" [(ngModel)]="sName" ></div>
+                        <div class="col-6"><input class="" type="text" name="sMobile" [(ngModel)]="sMobile" ></div>
+                        <div class="col-6"><input class="" type="text" name="sEmail" [(ngModel)]="sEmail" ></div>
+                        <div class="col-6"><input class="" type="text" name="sRequest" [(ngModel)]="sRequest" ></div>
+                    </div>
+                    <div class="row mb-2">
+                            <div class="col-sm-4">Follow up result</div>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="fResult" id="" cols="30" rows="4" [(ngModel)]="fResult"></textarea>
+                            </div>
+                        </div> 
+                      <div class="row mb-2">
+                          <div class="col-sm-4">Next Date</div>
+                          <div class="col-sm-8">
+                              <input class="form-control" type="date" name="nDate" [(ngModel)]="nDate" >
+                          </div>
+                      </div>
+
+                      <div class="row mb-2">
+                            <div class="col-sm-4">Followup Title</div>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="followupTitle" [(ngModel)]="followupTitle" id="">
+                                    <option value="Fee Collect">Fee Collect</option>
+                                    <option value="Next FollowUp">Next FollowUp</option>
+                                </select>
+                            </div>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateLead()">Update</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+  </div>
+
+<!-- register student -->
+<div class="register-form-wrapper">    
+        <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form #courseadd="ngForm">
+                  <div class="modal-header">
+                    <h3 class="modal-title">Register Student </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Name</div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="sName" [(ngModel)]="sName" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Mobile</div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="sMobile" [(ngModel)]="sMobile" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Email</div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="sEmail" [(ngModel)]="sEmail" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Query</div>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="sRequest" [(ngModel)]="sRequest" >
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Course</div>
+                        <div class="col-sm-8">
+                            <select name="sCourse" id="" class="form-control" [(ngModel)]="sCourse">
+                                <option *ngFor="let course of courses" value="{{ course._id }}">{{ course.title }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Address</div>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="sAddress" [(ngModel)]="sAddress" id="" cols="30" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4">Photo</div>
+                        <div class="col-sm-8">
+                            <input (change)="getFile( $event )" type="file" name="sPhoto"  [(ngModel)]="sPhoto" id="">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="registerStudent()">Register</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+  </div>

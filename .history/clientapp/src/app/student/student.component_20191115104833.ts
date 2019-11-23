@@ -26,7 +26,6 @@ export class StudentComponent implements OnInit {
   sPhoto;
   sPhotoExt;
   title;
-  tDate = new Date();
   constructor(private studentService: BackendService) { }
 
   ngOnInit() {

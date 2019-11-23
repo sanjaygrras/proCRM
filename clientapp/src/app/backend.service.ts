@@ -51,8 +51,17 @@ export class BackendService {
     return this.http.post('http://localhost:3000/student-new-lead', q);
   }
 
-  getLead() {
+  getLead(): any {
     return this.http.get('http://localhost:3000/get-lead');
+  }
+
+  followupStudent(f): any {
+    // console.log('in service ' + JSON.stringify(f));
+    return this.http.post('http://localhost:3000/folloup-student', f );
+  }
+
+  registerStudentPush(s): any {
+    return this.http.post('http://localhost:3000/student-register', s);
   }
 
 }
