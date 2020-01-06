@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         if(file)
         {
-        console.log(file.originalname.substr(file.originalname.lastIndexOf('.')));
+        // console.log(file.originalname.substr(file.originalname.lastIndexOf('.')));
       cb(null, 'temp'+file.originalname.substr(file.originalname.lastIndexOf('.')))
     }
     else{
@@ -99,8 +99,8 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
 
 app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
 
-    console.log(req.body);
-    console.log(req.file);
+    // console.log(req.body);
+    // console.log(req.file);
     let collection_instance = connection.db('procrm').collection('courses');
 
     if(req.file)
@@ -111,17 +111,17 @@ app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
                         {_id:ObjectId(req.body._id)}, 
                         { $set:{title:req.body.title, prerequisite:req.body.prerequisite, description:req.body.description,fee:req.body.fee,keywords:req.body.keywords,brochureExt:req.body.brochureExt}}, (err, data) => {
         if(err){
-            console.log("error occured");
+            // console.log("error occured");
             res.send({status:"failed", message : "course could not be created"});
             
         }
         else{
 
-            console.log(" no error and 156");
+            // console.log(" no error and 156");
             var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
            //delete
            
-           console.log(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt)); 
+           // console.log(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt)); 
            try{
            fs.unlinkSync(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt));
            }
@@ -544,20 +544,11 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
 })
 
 app.post('/student-register', upload.single('sPhoto'), (req,res) => {
-    // console.log(req.body);
+    console.log(req.body);
     req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
     
     let collection = connection.db('procrm').collection('student');
-    const sData = {
-        sName:req.body.sName, 
-        sMobile:req.body.sMobile, 
-        sEmail:req.body.sEmail, 
-        sRequest:req.body.sRequest, 
-        sCourse:ObjectId(req.body.sCourse),
-        sAddress:req.body.sAddress,
-        sPhotoExt:req.body.sPhotoExt,
-    }
-    collection.insertOne(sData, (err,data) => {
+    collection.insertOne(req.body, (err,data) => {
         if(err)
         {
             res.send({status:"ok", msg:"getting error", data:docs})
@@ -599,17 +590,14 @@ app.get('/student-course', (req,res)=>{
     collection_instance.aggregate([
         {
             $lookup:{
-                from:"courses", 
-                localField:"sCourse",
+                from:"courses",
+                localField:"title",
                 foreignField:"_id",
-                as:"courseName"
+                as:"course_name"
             }
         }
-    ]).toArray((err,docs) => {
-        console.log(".............................................");
-        console.log( docs[0]); 
-        console.log(docs[0].courseName);
-        res.send({status:"ok", data:docs});
+    ]).toArray((err,docs)=>{console.log(docs); 
+    res.send({status:"ok", docs:docs});
     })
 
 

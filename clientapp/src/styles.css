@@ -3503,3 +3503,7 @@
 .main-header a {
   color: #333333;
 }
+
+.error {
+  border-color:#ff0000;
+}

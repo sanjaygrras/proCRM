@@ -600,16 +600,14 @@ app.get('/student-course', (req,res)=>{
         {
             $lookup:{
                 from:"courses", 
-                localField:"sCourse",
+                localField:ObjectId('sCourse'),
                 foreignField:"_id",
-                as:"courseName"
+                as:"course_name"
             }
         }
     ]).toArray((err,docs) => {
-        console.log(".............................................");
-        console.log( docs[0]); 
-        console.log(docs[0].courseName);
-        res.send({status:"ok", data:docs});
+        console.log( docs); 
+        res.send({status:"ok", docs:docs});
     })
 
 

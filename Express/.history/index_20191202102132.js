@@ -544,20 +544,11 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
 })
 
 app.post('/student-register', upload.single('sPhoto'), (req,res) => {
-    // console.log(req.body);
+    console.log(req.body);
     req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
     
     let collection = connection.db('procrm').collection('student');
-    const sData = {
-        sName:req.body.sName, 
-        sMobile:req.body.sMobile, 
-        sEmail:req.body.sEmail, 
-        sRequest:req.body.sRequest, 
-        sCourse:ObjectId(req.body.sCourse),
-        sAddress:req.body.sAddress,
-        sPhotoExt:req.body.sPhotoExt,
-    }
-    collection.insertOne(sData, (err,data) => {
+    collection.insertOne(req.body, (err,data) => {
         if(err)
         {
             res.send({status:"ok", msg:"getting error", data:docs})
@@ -592,28 +583,6 @@ app.get('/registered-students',(req,res) => {
     })    
 })
 
-// student course
-app.get('/student-course', (req,res)=>{
-    let collection_instance = connection.db('procrm').collection('student');
-
-    collection_instance.aggregate([
-        {
-            $lookup:{
-                from:"courses", 
-                localField:"sCourse",
-                foreignField:"_id",
-                as:"courseName"
-            }
-        }
-    ]).toArray((err,docs) => {
-        console.log(".............................................");
-        console.log( docs[0]); 
-        console.log(docs[0].courseName);
-        res.send({status:"ok", data:docs});
-    })
-
-
-})
 
 
 

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   failed;
   name;
   class;
+  errMessage = true;
   constructor(private rou:Router, private arou:ActivatedRoute, private admin: DataService, private avs: ActionValidationService) { }
 
   ngOnInit() {

@@ -609,7 +609,7 @@ app.get('/student-course', (req,res)=>{
         console.log(".............................................");
         console.log( docs[0]); 
         console.log(docs[0].courseName);
-        res.send({status:"ok", data:docs});
+        res.send({status:"ok", docs:docs});
     })
 
 

@@ -555,7 +555,7 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
         sRequest:req.body.sRequest, 
         sCourse:ObjectId(req.body.sCourse),
         sAddress:req.body.sAddress,
-        sPhotoExt:req.body.sPhotoExt,
+        sPhotoExt:req.body.sPhotoExt;
     }
     collection.insertOne(sData, (err,data) => {
         if(err)
@@ -600,16 +600,14 @@ app.get('/student-course', (req,res)=>{
         {
             $lookup:{
                 from:"courses", 
-                localField:"sCourse",
+                localField:ObjectId('sCourse'),
                 foreignField:"_id",
-                as:"courseName"
+                as:"course_name"
             }
         }
     ]).toArray((err,docs) => {
-        console.log(".............................................");
-        console.log( docs[0]); 
-        console.log(docs[0].courseName);
-        res.send({status:"ok", data:docs});
+        console.log( docs); 
+        res.send({status:"ok", docs:docs});
     })
 
 

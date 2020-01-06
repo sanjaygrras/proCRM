@@ -64,4 +64,12 @@ export class BackendService {
     return this.http.post('http://localhost:3000/student-register', s);
   }
 
+  registeredStudents(): any {
+    return this.http.get('http://localhost:3000/registered-students');
+  }
+
+  getStudentCourse(): any {
+    return this.http.get('http://localhost:3000/student-course');
+  }
+
 }

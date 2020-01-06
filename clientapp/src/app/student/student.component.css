@@ -151,3 +151,8 @@
     max-height: 200px;
     transition: color 0.3s linear 0.3s;
   }
+
+  .tab-content {
+    padding: 15px;
+    border: 1px solid #dadada;
+  }

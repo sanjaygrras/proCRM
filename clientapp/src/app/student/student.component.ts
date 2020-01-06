@@ -13,6 +13,7 @@ export class StudentComponent implements OnInit {
   sMobile;
   sRequest;
   getLead;
+  registeredStudents;
   id;
   fResult;
   nDate;
@@ -27,6 +28,7 @@ export class StudentComponent implements OnInit {
   sPhotoExt;
   title;
   tDate = new Date();
+  courseName;
   constructor(private studentService: BackendService) { }
 
   ngOnInit() {
@@ -35,6 +37,14 @@ export class StudentComponent implements OnInit {
     });
     this.studentService.getcourse().subscribe((p) => {
       this.courses = p.docs;
+    });
+    // this.studentService.registeredStudents().subscribe( (g) => {
+    //   this.registeredStudents = g.data;
+    // });
+
+    this.studentService.getStudentCourse().subscribe( (s) => {
+      this.sCourse = s.data;
+      console.log(this.sCourse);
     });
   }
 
