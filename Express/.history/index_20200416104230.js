@@ -544,55 +544,38 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
 })
 
 app.post('/student-register', upload.single('sPhoto'), (req,res) => {
-    // console.log('Register as student');
-    // console.log(req.file);
-
-    let collection = connection.db('procrm').collection('student');
-
-    if(req.file) {
-        req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
+    // console.log(req.body);
+    req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
     
-        const sData = {
-            sName:req.body.sName, 
-            sMobile:req.body.sMobile, 
-            sEmail:req.body.sEmail, 
-            sRequest:req.body.sRequest, 
-            sCourse:ObjectId(req.body.sCourse),
-            sAddress:req.body.sAddress,
-            sPhotoExt:req.body.sPhotoExt,
-        }
-        collection.insertOne(sData, (err,data) => {
-            if(err)
-            {
-                console.log('registering student error');
-                res.send({status:"ok", msg:"getting error", data:docs})
-            }
-            else{
-                var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-               
-                fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
-                    if(!err)
-                    {
-                        res.send({status:"failed", message : "Student Can't register"});
-                    }
-                    else{
-                        res.send({status:"ok", message:"Student created succeffully" } );
-                    }
-                });
-            }
-        })
-    } else {
-        collection.insertOne(req.body, (err, data) => {
-            if(err){
-                res.send({status:"failed", message : "Student Can't register"});
-            }
-            else{
-                res.send({status:"ok", message:"Student created succeffully" } );
-            }
-        });
+    let collection = connection.db('procrm').collection('student');
+    const sData = {
+        sName:req.body.sName, 
+        sMobile:req.body.sMobile, 
+        sEmail:req.body.sEmail, 
+        sRequest:req.body.sRequest, 
+        sCourse:ObjectId(req.body.sCourse),
+        sAddress:req.body.sAddress,
+        sPhotoExt:req.body.sPhotoExt,
     }
-
-
+    collection.insertOne(sData, (err,data) => {
+        if(err)
+        {
+            res.send({status:"ok", msg:"getting error", data:docs})
+        }
+        else{
+            var ext = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
+           
+            fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
+                if(!err)
+                {
+                    res.send({status:"ok", message:"course created succeffully" } );
+                }
+                else{
+                    res.send({status:"failed", message : "somer error occured in file renaming"})
+                }
+            });
+        }
+    })
 })
 
 
@@ -610,8 +593,9 @@ app.get('/registered-students',(req,res) => {
 })
 
 app.post('/edit-student', upload.single('sPhoto'),(req,res)=>{
-    // console.log(req.body);
 
+    // console.log(req.body);
+    // console.log(req.file);
     let collection_instance = connection.db('procrm').collection('student');
 
     if(req.file) {
@@ -619,7 +603,7 @@ app.post('/edit-student', upload.single('sPhoto'),(req,res)=>{
     
     collection_instance.updateOne(
                         {_id:ObjectId(req.body._id)}, 
-                        { $set:{sName:req.body.sName, sMobile:req.body.sMobile, sEmail:req.body.sEmail, sRequest:req.body.sRequest,sCourse:req.body.sCourse,sAddress:req.body.sAddress,sPhotoExt:req.body.sPhotoExt}}, (err, data) => {
+                        { $set:{sName:req.body.sName, sMobile:req.body.sMobile, sEmail:req.body.courseIdsEmail, sRequest:req.body.sRequest,sCourse:req.body.sCourse,sAddress:req.body.sAddress,sPhotoExt:req.body.sPhotoExt}}, (err, data) => {
         if(err){
             res.send({status:"failed", message : "course could not be created"});
         }
@@ -630,7 +614,7 @@ app.post('/edit-student', upload.single('sPhoto'),(req,res)=>{
            }
            catch(e)
            {
-                console.log("student edit - some Error occured");
+               // console.log("some Error occured");
            }
 
             fs.rename(path.join(__dirname,'uploads','temp'+ext),path.join(__dirname, 'uploads',req.body._id+ext), (err)=>{
@@ -648,7 +632,7 @@ app.post('/edit-student', upload.single('sPhoto'),(req,res)=>{
     else{
         collection_instance.updateOne(
                             {_id:ObjectId(req.body._id)}, 
-                            { $set:{sName:req.body.sName, sMobile:req.body.sMobile, sEmail:req.body.sEmail, sRequest:req.body.sRequest,sCourse:req.body.sCourse,sAddress:req.body.sAddress}}, (err, data) => {
+                            { $set:{sName:req.body.sName, sMobile:req.body.sMobile, sEmail:req.body.courseIdsEmail, sRequest:req.body.sRequest,sCourse:req.body.sCourse,sAddress:req.body.sAddress,sPhotoExt:req.body.sPhotoExt}}, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "course could not be created"});
             }

@@ -13,7 +13,6 @@ export class BackendService {
   }
 
   postcourse(data) {
-    console.log('Backend Hit');
     return this.http.post('http://localhost:3000/post-course', data);
   }
 
@@ -68,8 +67,8 @@ export class BackendService {
     return this.http.get('http://localhost:3000/registered-students');
   }
 
-  getStudentCourse(): any {
-    return this.http.get('http://localhost:3000/student-course');
+  editStudentUpdatePush(data): any {
+    return this.http.post('http://localhost:3000/edit-student', data);
   }
 
 }

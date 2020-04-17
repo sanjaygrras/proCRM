@@ -573,10 +573,10 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
                 fs.rename(path.join(__dirname,'uploads/temp'+ext),path.join(__dirname, 'uploads/'+data.insertedId+ext), (err)=>{
                     if(!err)
                     {
-                        res.send({status:"failed", message : "Student Can't register"});
+                        res.send({status:"ok", message:"course created succeffully" } );
                     }
                     else{
-                        res.send({status:"ok", message:"Student created succeffully" } );
+                        res.send({status:"failed", message : "somer error occured in file renaming"})
                     }
                 });
             }

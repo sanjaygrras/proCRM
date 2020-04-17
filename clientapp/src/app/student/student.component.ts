@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-student',
@@ -8,7 +9,7 @@ import { BackendService } from '../backend.service';
 })
 export class StudentComponent implements OnInit {
   msg;
-  sName;
+  sName: any;
   sEmail;
   sMobile;
   sRequest;
@@ -26,9 +27,11 @@ export class StudentComponent implements OnInit {
   picture = '';
   sPhoto;
   sPhotoExt;
+  oldsPhotoExt;
   title;
   tDate = new Date();
   courseName;
+
   constructor(private studentService: BackendService) { }
 
   ngOnInit() {
@@ -38,13 +41,8 @@ export class StudentComponent implements OnInit {
     this.studentService.getcourse().subscribe((p) => {
       this.courses = p.docs;
     });
-    // this.studentService.registeredStudents().subscribe( (g) => {
-    //   this.registeredStudents = g.data;
-    // });
-
-    this.studentService.getStudentCourse().subscribe( (s) => {
-      this.sCourse = s.data;
-      console.log(this.sCourse);
+    this.studentService.registeredStudents().subscribe( (g) => {
+      this.registeredStudents = g.data;
     });
   }
 
@@ -89,7 +87,6 @@ export class StudentComponent implements OnInit {
   updateLead() {
     const updateLead = {followupId: this.id, fResult: this.fResult, nDate: this.nDate, followupTitle: this.followupTitle,
       currentDate: new Date()  };
-    console.log( updateLead );
     this.studentService.followupStudent( updateLead ).subscribe((f) => {
 
     });
@@ -99,7 +96,7 @@ export class StudentComponent implements OnInit {
     return '#a' + id;
   }
 
-  newStudent(l) {
+  leadAsStudent(l) {
     this.id = l._id;
     this.sName = l.sName;
     this.sEmail = l.sEmail;
@@ -118,8 +115,6 @@ export class StudentComponent implements OnInit {
     fData.set('sPhoto', this.sPhoto);
     // fData.set('sPhotoExt', 'this.sPhotoExt');
 
-    console.log(fData.get('sPhoto'));
-
     this.studentService.registerStudentPush( fData ).subscribe( (s) => {
 
     });
@@ -127,6 +122,38 @@ export class StudentComponent implements OnInit {
 
   getFile(f) {
     this.sPhoto = f.target.files[0];
+  }
+
+  editStudent(data) {
+    // console.log("raviknat checking " + JSON.stringify(data));
+    this.id = data._id;
+    this.sName = data.sName;
+    this.sMobile = data.sMobile;
+    this.sEmail = data.sEmail;
+    this.sRequest = data.sRequest;
+    this.sCourse = data.sCourse;
+    this.sAddress = data.sAddress;
+    this.sPhoto = data.sPhotoExt;
+    // this.courseName = data.courseName[0].title;
+  }
+
+  editStudentUpdate() {
+    const fData = new FormData();
+    fData.set('_id', this.id);
+    fData.set('sName', this.sName);
+    fData.set('sMobile', this.sMobile);
+    fData.set('sEmail', this.sEmail);
+    fData.set('sRequest', this.sRequest);
+    fData.set('sCourse', this.sCourse);
+    fData.set('sAddress', this.sAddress);
+    fData.set('sPhoto', this.sPhoto);
+    fData.set('oldsPhotoExt', this.sPhotoExt);
+
+    this.studentService.editStudentUpdatePush( fData ).subscribe( (s) => {
+      this.studentService.registeredStudents().subscribe( (g) => {
+        this.registeredStudents = g.data;
+      });
+    });
   }
 
 }
