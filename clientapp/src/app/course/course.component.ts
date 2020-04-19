@@ -24,7 +24,6 @@ export class CourseComponent implements OnInit {
   keywords = [];
   courses;
   course;
-  Subjects = [];
   allSubject;
   subjectName: any;
   subjectId;
@@ -50,7 +49,6 @@ export class CourseComponent implements OnInit {
     fData.set('description', this.description);
     fData.set('fee', this.fee);
     fData.set('keywords', this.keywords.toString());
-    // fData.set('Subjects', this.Subjects.toString());
 
     this.backend.postcourse(fData).subscribe((d) => {
       this.backend.getcourse().subscribe((p) => {
@@ -97,7 +95,6 @@ export class CourseComponent implements OnInit {
   }
 
   SubjectAdd() {
-
     const cAdd = {
         courseId: this.courseId,
         subjectId: this.subjectId,
@@ -110,9 +107,7 @@ export class CourseComponent implements OnInit {
       }
     });
 
-    // console.log('selected course ID ' + JSON.stringify(currentCourse) );
-
-    const isExist = currentCourse[0].subject_Details.some((ele) => {
+    const isExist = currentCourse[0].subjects.some((ele) => {
       if ( ele === this.subjectId) { return true; }
     });
 
@@ -125,8 +120,6 @@ export class CourseComponent implements OnInit {
         });
       });
     }
-
-
   }
 
   getFile(f) {
@@ -141,7 +134,6 @@ export class CourseComponent implements OnInit {
     const dSub = {subjectId: d, courseId: b };
     this.backend.subjectInCourseDel(dSub).subscribe( (d) => {
       if ( d.status === 'ok') {
-        // console.log(' Deleted successfully ');
         this.backend.getcourse().subscribe((p) => {
           this.courses = p.docs;
         });

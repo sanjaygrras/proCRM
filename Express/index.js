@@ -76,7 +76,14 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
 
     if(req.file) {
         req.body.brochureExt=req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
-        collection_instance.insertOne(req.body, (err, data) => {
+        collection_instance.insertOne({title:req.body.title,
+                prerequisite:req.body.prerequisite,
+                description:req.body.description,
+                fee:req.body.fee,
+                keywords:req.body.keywords,
+                brochureExt:req.body.brochureExt,
+                subjects:[],
+            }, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "course could not be created"});
             } else {
@@ -93,13 +100,12 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
             }
         });
     } else {
-        // console.log(req.body);
         collection_instance.insertOne({title:req.body.title,
                                         prerequisite:req.body.prerequisite,
                                         description:req.body.description,
                                         fee:req.body.fee,
                                         keywords:req.body.keywords,
-                                        // subjects:req.body.subjects,
+                                        subjects:[],
                                     }, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "Course Can't create"});
