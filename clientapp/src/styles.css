@@ -29,6 +29,7 @@
   body, html {
       height: 100%;
       font-family: Montserrat-Regular, sans-serif;
+      font-size: 13px;
   }
   
   /*---------------------------------------------*/
@@ -47,7 +48,7 @@
   
   a:hover {
       text-decoration: none;
-    color: #fff;
+      color: #218838;
   }
   
   /*---------------------------------------------*/

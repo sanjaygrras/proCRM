@@ -45,8 +45,8 @@
                         <div class="row px-2" *ngFor="let d of data.subject_Details">
                             <div class="col p-1">{{data.subject_Details.indexOf(d) + 1}}</div>
                             <div class="col p-1">{{d.title}}</div>
-                            <div class="col p-1">{{data.duration}}</div>
-                            <div class="col p-1">{{data.description}}</div>
+                            <div class="col p-1">{{d.duration}}</div>
+                            <div class="col p-1">{{d.description}}</div>
                             <div class="col p-1"></div>
                             <div class="col p-1"><button (click)="deleteCourseSubject(d._id, data._id)"><i class="fa fa-trash-o"></i></button></div>
                         </div>
@@ -171,7 +171,9 @@
                               <input class="form-control" (change)="getFile( $event )" type="file" name="brochure" [(ngModel)]="brochure" >
                           </div>
                           <div class="col-sm-12">
-                            <img src="http://localhost:3000/{{id}}{{brochureExt}}" alt="">
+                            <ng-container *ngIf="brochureExt">
+                                <img style="width:100%" src="http://localhost:3000/{{id}}{{brochureExt}}" alt="">
+                            </ng-container>
                         </div>
                       </div>
                       <div class="row mb-2">

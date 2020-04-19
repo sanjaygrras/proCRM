@@ -21,6 +21,7 @@ export class StudentComponent implements OnInit {
   followupTitle;
   followupId;
   leadSource;
+  leadId;
   courses;
   sCourse;
   sAddress;
@@ -31,16 +32,27 @@ export class StudentComponent implements OnInit {
   title;
   tDate = new Date();
   courseName;
+  leadStatus;
+  status = 'active';
+  message: any;
 
   constructor(private studentService: BackendService) { }
 
   ngOnInit() {
-    this.studentService.getLead().subscribe( (g) => {
-      this.getLead = g.data;
-    });
     this.studentService.getcourse().subscribe((p) => {
       this.courses = p.docs;
     });
+    this.listLead();
+    this.listStudent();
+  }
+
+  listLead() {
+    this.studentService.getLead().subscribe( (g) => {
+      this.getLead = g.data;
+    });
+  }
+
+  listStudent() {
     this.studentService.registeredStudents().subscribe( (g) => {
       this.registeredStudents = g.data;
     });
@@ -67,7 +79,7 @@ export class StudentComponent implements OnInit {
   }
 
   studentQuery() {
-    const sQuery = {sName: this.sName, sEmail: this.sEmail, sMobile: this.sMobile, sRequest: this.sRequest, followup: [],
+    const sQuery = {sName: this.sName, sEmail: this.sEmail, sMobile: this.sMobile, sRequest: this.sRequest, followup: [], status: 'active',
                     currentDate: new Date() };
     this.studentService.addQuery( sQuery ).subscribe( (s) => {
       if (s.status === 'ok') {
@@ -85,10 +97,10 @@ export class StudentComponent implements OnInit {
   }
 
   updateLead() {
-    const updateLead = {followupId: this.id, fResult: this.fResult, nDate: this.nDate, followupTitle: this.followupTitle,
-      currentDate: new Date()  };
+    const updateLead = {followupId: this.id, fResult: this.fResult, nDate: this.nDate, followupTitle: this.followupTitle, 
+                        currentDate: new Date()  };
     this.studentService.followupStudent( updateLead ).subscribe((f) => {
-
+      this.listLead();
     });
   }
 
@@ -102,6 +114,7 @@ export class StudentComponent implements OnInit {
     this.sEmail = l.sEmail;
     this.sMobile = l.sMobile;
     this.sRequest = l.sRequest;
+    this.status = l.status;
   }
 
   registerStudent() {
@@ -113,10 +126,12 @@ export class StudentComponent implements OnInit {
     fData.set('sCourse', this.sCourse);
     fData.set('sAddress', this.sAddress);
     fData.set('sPhoto', this.sPhoto);
+    fData.set('leadId', this.id);
     // fData.set('sPhotoExt', 'this.sPhotoExt');
 
     this.studentService.registerStudentPush( fData ).subscribe( (s) => {
-
+      this.listLead();
+      this.listStudent();
     });
   }
 
@@ -150,9 +165,7 @@ export class StudentComponent implements OnInit {
     fData.set('oldsPhotoExt', this.sPhotoExt);
 
     this.studentService.editStudentUpdatePush( fData ).subscribe( (s) => {
-      this.studentService.registeredStudents().subscribe( (g) => {
-        this.registeredStudents = g.data;
-      });
+      this.listLead();
     });
   }
 

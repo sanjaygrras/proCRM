@@ -42,7 +42,6 @@ export class BackendService {
   }
 
   subjectInCourseDel(d): any {
-    // console.log('inService' + JSON.stringify(d));
     return this.http.post('http://localhost:3000/subject-in-course-del', d);
   }
 

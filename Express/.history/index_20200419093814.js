@@ -93,14 +93,13 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
             }
         });
     } else {
-        // console.log(req.body);
+        console.log(req.body);
         collection_instance.insertOne({title:req.body.title,
                                         prerequisite:req.body.prerequisite,
                                         description:req.body.description,
                                         fee:req.body.fee,
                                         keywords:req.body.keywords,
-                                        // subjects:req.body.subjects,
-                                    }, (err, data) => {
+                                        subjects:req.body.courseSubject}, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "Course Can't create"});
             }
@@ -171,7 +170,7 @@ app.post('/delete-course', bodyParser.json(), (req,res)=> {
 })
 
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
-    // console.log('subject in coursre' + req.body);
+    console.log('subject in coursre' + req.body);
     let collection = connection.db('procrm').collection('courses');
     collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:ObjectId(req.body.subjectId)}}, (notOk,ok) => {
 

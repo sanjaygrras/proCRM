@@ -93,14 +93,8 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
             }
         });
     } else {
-        // console.log(req.body);
-        collection_instance.insertOne({title:req.body.title,
-                                        prerequisite:req.body.prerequisite,
-                                        description:req.body.description,
-                                        fee:req.body.fee,
-                                        keywords:req.body.keywords,
-                                        // subjects:req.body.subjects,
-                                    }, (err, data) => {
+        console.log(JSON.stringify(req.body));
+        collection_instance.insertOne({title:req.body.title,prerequisite:req.body.prerequisite,description:req.body.description,fee:req.body.fee,keywords:req.body.keywords}, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "Course Can't create"});
             }
@@ -171,14 +165,14 @@ app.post('/delete-course', bodyParser.json(), (req,res)=> {
 })
 
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
-    // console.log('subject in coursre' + req.body);
+    console.log(req.body);
     let collection = connection.db('procrm').collection('courses');
     collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:ObjectId(req.body.subjectId)}}, (notOk,ok) => {
 
         if(!notOk && ok) {
             res.send({status:"ok", msg:"subject added in course Successfully", s:ok})
         } else {
-            res.send({status:"error", msg:"Subject not adding in course", s:notOk})
+            res.send({status:"error", msg:"Getting errors", s:notOk})
         }
     });
 });
@@ -300,7 +294,7 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
             res.send({status:"ok", msg:"Role Created Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during creating role", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
         }
     })
 

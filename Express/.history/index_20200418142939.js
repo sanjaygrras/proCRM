@@ -93,14 +93,7 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
             }
         });
     } else {
-        // console.log(req.body);
-        collection_instance.insertOne({title:req.body.title,
-                                        prerequisite:req.body.prerequisite,
-                                        description:req.body.description,
-                                        fee:req.body.fee,
-                                        keywords:req.body.keywords,
-                                        // subjects:req.body.subjects,
-                                    }, (err, data) => {
+        collection_instance.insertOne(req.body, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "Course Can't create"});
             }
@@ -133,14 +126,17 @@ app.post('/post-edit-course', upload.single('brochureImage'),(req,res)=>{
                 try {
                         fs.unlinkSync(path.join(__dirname, 'uploads',req.body._id+req.body.oldBrochureExt));
                 }
-                catch(e) {
-                    console.log("Error during edit course");
+                catch(e)
+                {
+                    console.log("some Error occured");
                 }
-                // console.log("new name is "+path.join(__dirname, 'uploads',req.body._id+ext));
+            console.log("new name is "+path.join(__dirname, 'uploads',req.body._id+ext));
                 fs.rename(path.join(__dirname,'uploads','temp'+ext),path.join(__dirname, 'uploads',req.body._id+ext), (err)=>{
-                    if(!err) {
+                    if(!err)
+                    {
                         res.send({status:"ok", message:"course created succeffully" } );
-                    }  else {
+                    }
+                    else{
                         res.send({status:"failed", message : "somer error occured in file renaming"})
                     }
                 });
@@ -171,14 +167,13 @@ app.post('/delete-course', bodyParser.json(), (req,res)=> {
 })
 
 app.post('/subject-in-course', bodyParser.json(), (req,res)=> {
-    // console.log('subject in coursre' + req.body);
     let collection = connection.db('procrm').collection('courses');
     collection.updateOne({_id:ObjectId(req.body.courseId)},{$push: {subjects:ObjectId(req.body.subjectId)}}, (notOk,ok) => {
 
         if(!notOk && ok) {
             res.send({status:"ok", msg:"subject added in course Successfully", s:ok})
         } else {
-            res.send({status:"error", msg:"Subject not adding in course", s:notOk})
+            res.send({status:"error", msg:"Getting errors", s:notOk})
         }
     });
 });
@@ -190,7 +185,7 @@ app.post('/subject-in-course-del',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"subject remove Successfully", data:r});
         }
         else {
-            res.send({status:"failed", msg:"Error duing delete selected course of subject.", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
         }
     })
 })
@@ -244,7 +239,7 @@ app.get('/getPermisions/:role', (req,res)=>{
             res.send({status:"ok", msg:"data fetched successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error duing getting permission", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         }
     })
 })
@@ -258,7 +253,7 @@ app.get('/getAllFeatures', (req,res)=>{
             res.send({status:"ok", msg:"data fetched successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error during listing features", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         }
     })
 })
@@ -273,7 +268,7 @@ app.post('/updateRolePermissions/:role', bodyParser.json(), (req,res)=>{
             res.send({status:"ok", msg:"permissions updated successfully for"+req.params.role, data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during updating role.", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
         }
     })
 })
@@ -286,13 +281,14 @@ app.post('/login', bodyParser.json(), (req,res)=>{
             res.send({status:"ok", msg:"Login Succesfull", data:docs});
         }
         else{
-            res.send({status:"failed", msg:"Error during login", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
             
         }
     })
 })
 
 app.post('/createRole', bodyParser.json(), (req,res)=>{
+
     let collection = connection.db('procrm').collection('roles');
     collection.insertOne(req.body,(err,r)=>{
         if(!err && r)
@@ -300,7 +296,8 @@ app.post('/createRole', bodyParser.json(), (req,res)=>{
             res.send({status:"ok", msg:"Role Created Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during creating role", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
+            
         }
     })
 
@@ -315,7 +312,8 @@ app.post('/user-register', bodyParser.json(), (req,res)=>{
             res.send({status:"ok", msg:"User Created Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during user register", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
+            
         }
     })
 })
@@ -325,10 +323,10 @@ app.get('/user-get',(req,res) => {
     collection.find().toArray((err,docs)=>{
         if(!err)
         {
-            res.send({status:"ok", msg:"data fetched successfully.", data:docs})
+            res.send({status:"ok", msg:"data fetched successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error during user listing.", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         }
     })    
 })
@@ -341,7 +339,7 @@ app.post('/user-del',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"User deleted Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error duing user delete.", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
             
         }
     })
@@ -352,10 +350,10 @@ app.post('/user-edit', bodyParser.json(), (req,res) => {
     collection.updateOne({_id:ObjectId(req.body._id)}, { $set:{ name:req.body.name, email:req.body.email, pass:req.body.pass, role:req.body.role, contact:req.body.contact } }, (err,r) => {
         if(!err && r)
         {
-            res.send({status:"ok", msg:"User edited Successfully.", data:r});
+            res.send({status:"ok", msg:"User edited Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during edit user.", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
             
         }
     })
@@ -392,7 +390,7 @@ app.post('/delete-subject',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"subject deleted Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error duging delete subject.", data:err}); 
+            res.send({status:"failed", msg:"some error occured", data:err}); 
         }
     })
 })
@@ -404,7 +402,7 @@ app.post('/edit-subject',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"subject deleted Successfully", data:r});
         }
         else {
-            res.send({status:"failed", msg:"Error during edit subject.", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
         }
     })
 })
@@ -441,7 +439,7 @@ app.post('/delete-topic',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
         }
         else{
-            res.send({status:"failed", msg:"Error during delete topic.", data:err}); 
+            res.send({status:"failed", msg:"some error occured", data:err}); 
         }
     })
 })
@@ -455,7 +453,7 @@ app.post('/edit-topic',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"Topic updated Successfully", data:r});
         }
         else {
-            res.send({status:"failed", msg:"Error during edit topic", data:err});
+            res.send({status:"failed", msg:"some error occured", data:err});
         }
     })
 })
@@ -479,7 +477,7 @@ app.get('/get-lead',(req,res) => {
             res.send({status:"ok", msg:"data fetched successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error during displaying lead.", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         }
     })    
 })
@@ -496,7 +494,7 @@ app.post('/folloup-student',bodyParser.json(), (req,res) => {
             res.send({status:"ok", msg:"Followup updated successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error during add followup", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         } 
     }
     )
@@ -507,8 +505,7 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
     // console.log(req.file);
 
     let collection = connection.db('procrm').collection('student');
-    const leadCompleteId = req.body.leadId; 
-    
+
     if(req.file) {
         req.body.sPhotoExt = req.file.originalname.substr(req.file.originalname.lastIndexOf('.'));
     
@@ -520,7 +517,6 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
             sCourse:ObjectId(req.body.sCourse),
             sAddress:req.body.sAddress,
             sPhotoExt:req.body.sPhotoExt,
-            leadId:req.body.leadId,
         }
         collection.insertOne(sData, (err,data) => {
             if(err)
@@ -544,25 +540,11 @@ app.post('/student-register', upload.single('sPhoto'), (req,res) => {
         })
     } else {
         collection.insertOne(req.body, (err, data) => {
-            
             if(err){
                 res.send({status:"failed", message : "Student Can't register"});
             }
             else{
-                // Lead Status changing
-                let collection = connection.db('procrm').collection('student_lead');
-
-                collection.updateOne(
-                        {_id:ObjectId(leadCompleteId)},{$set: {status:'Registered'}}, (err,docs) => {
-                        if(!err)
-                        {
-                            res.send({status:"ok", msg:"Student created succeffully", LeadStatus:"Lead registered successfully", data:docs})
-                        }
-                        else{
-                            res.send({status:"failed", msg:"Error during lead status change", data:err})
-                        } 
-                    }
-                );
+                res.send({status:"ok", message:"Student created succeffully" } );
             }
         });
     }
@@ -576,10 +558,10 @@ app.get('/registered-students',(req,res) => {
     collection.find().toArray((err,docs)=>{
         if(!err)
         {
-            res.send({status:"ok", msg:"Students listed successfully", data:docs})
+            res.send({status:"ok", msg:"data fetched successfully", data:docs})
         }
         else{
-            res.send({status:"failed", msg:"Error during listing students", data:err})
+            res.send({status:"failed", msg:"some error occured", data:err})
         }
     })    
 })
@@ -605,7 +587,7 @@ app.post('/edit-student', upload.single('sPhoto'),(req,res)=>{
            }
            catch(e)
            {
-                console.log("Error during edit student.");
+                console.log("student edit - some Error occured");
            }
 
             fs.rename(path.join(__dirname,'uploads','temp'+ext),path.join(__dirname, 'uploads',req.body._id+ext), (err)=>{

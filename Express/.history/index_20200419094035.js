@@ -93,14 +93,13 @@ app.post('/post-course', upload.single('brochureImage'),(req,res)=>{
             }
         });
     } else {
-        // console.log(req.body);
+        console.log(req.body);
         collection_instance.insertOne({title:req.body.title,
                                         prerequisite:req.body.prerequisite,
                                         description:req.body.description,
                                         fee:req.body.fee,
                                         keywords:req.body.keywords,
-                                        // subjects:req.body.subjects,
-                                    }, (err, data) => {
+                                        subjects:req.body.courseSubject}, (err, data) => {
             if(err){
                 res.send({status:"failed", message : "Course Can't create"});
             }
