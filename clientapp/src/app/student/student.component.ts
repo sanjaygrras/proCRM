@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../backend.service';
 import { stringify } from 'querystring';
+import {ValidateForm } from '../validate-form';
+import { StudentModel } from '../models/StudentModel';
 
 @Component({
   selector: 'app-student',
@@ -35,6 +37,12 @@ export class StudentComponent implements OnInit {
   leadStatus;
   status = 'active';
   message: any;
+  regStudent: any = {};
+  stFrom: StudentModel = new StudentModel();
+
+  onSubmit(a) {
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(a));
+  }
 
   constructor(private studentService: BackendService) { }
 
@@ -119,7 +127,7 @@ export class StudentComponent implements OnInit {
 
   registerStudent() {
     const fData = new FormData();
-    fData.set('sName', this.sName);
+    fData.set('sName', this.stFrom.sName);
     fData.set('sMobile', this.sMobile);
     fData.set('sEmail', this.sEmail);
     fData.set('sRequest', this.sRequest);
@@ -129,10 +137,10 @@ export class StudentComponent implements OnInit {
     fData.set('leadId', this.id);
     // fData.set('sPhotoExt', 'this.sPhotoExt');
 
-    this.studentService.registerStudentPush( fData ).subscribe( (s) => {
-      this.listLead();
-      this.listStudent();
-    });
+    // this.studentService.registerStudentPush( fData ).subscribe( (s) => {
+    //   this.listLead();
+    //   this.listStudent();
+    // });
   }
 
   getFile(f) {

@@ -30,7 +30,7 @@
                     <th>Follow Up</th>
                     <th>History</th>
                     <th>Register</th>
-                    <th>Status</th>
+                    <th>View all</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of getLead">
@@ -39,7 +39,12 @@
                         <td>{{data.sMobile}}</td>
                         <td>{{data.sRequest}}</td>
                         <td>
-                            <button class="btn btn-success" data-target="#followUp" data-toggle="modal" (click)="leadProcess(data)">Follow up</button>
+                            <ng-container *ngIf="data.status == 'active'">
+                                <button class="btn btn-success" data-target="#followUp" data-toggle="modal" (click)="leadProcess(data)">Follow up</button>
+                            </ng-container>
+                            <ng-container *ngIf="data.status != 'active'">
+                                <button class="btn btn-success disabled" disabled >Follow up</button>
+                            </ng-container>
                             <ng-container *ngIf="data.followup">
                                 <div class="modal fade followUpList" id="a{{ getLead.indexOf(data) }}" tabindex="-1" role="dialog" aria-labelledby="followUpList" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -81,9 +86,9 @@
                             <ng-container *ngIf="data.status == 'active'">
                                 <button class="btn btn-success" data-toggle="modal" data-target="#register" (click)="leadAsStudent(data)">Register as Student</button>
                             </ng-container>
-                        </td>
-                        <td >
-                            {{data.status}}
+                            <ng-container *ngIf="data.status != 'active'">
+                                Registered
+                            </ng-container>
                         </td>
                     </tr>
                 </tbody>
@@ -135,7 +140,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form #courseadd="ngForm">
+              <form #ng="ngForm">
                   <div class="modal-body">
                       <div class="row mb-2">
                           <div class="col-sm-4">Student Name</div>
@@ -229,7 +234,7 @@
         <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="register" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <form #courseadd="ngForm">
+              <form #studentRegisterForm="ngForm">
                   <div class="modal-header">
                     <h3 class="modal-title">Register Student </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -240,31 +245,38 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">Name</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="sName" [(ngModel)]="sName" >
+                            <input class="form-control" type="text" name="sName" [(ngModel)]="stFrom.sName" #sname="ngModel" required>
+                            <div class="error" *ngIf="sname.errors">
+                                <div *ngIf="sname.errors.required">This is required filed.</div>
+                            </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Mobile</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="sMobile" [(ngModel)]="sMobile" >
+                            <input class="form-control" type="tel" name="sMobile" [(ngModel)]="stFrom.sMobile" #sMobile="ngModel"  required maxlenght="10">
+                            <div class="error" *ngIf="sMobile.errors">
+                                <div *ngIf="sMobile.errors.required">This is required filed.</div>
+                                <div *ngIf="sMobile.errors.maxlenght"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Email</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="sEmail" [(ngModel)]="sEmail" >
+                            <input class="form-control" type="email" name="sEmail" [(ngModel)]="stFrom.sEmail" required>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Query</div>
                         <div class="col-sm-8">
-                            <input class="form-control" type="text" name="sRequest" [(ngModel)]="sRequest" >
+                            <input class="form-control" type="text" name="sRequest" [(ngModel)]="stFrom.sRequest" required>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4">Course</div>
                         <div class="col-sm-8">
-                            <select name="sCourse" id="" class="form-control" [(ngModel)]="sCourse">
+                            <select name="sCourse" id="" class="form-control" [(ngModel)]="stFrom.sCourse" required>
                                 <option *ngFor="let course of courses" value="{{ course._id }}">{{ course.title }}</option>
                             </select>
                         </div>
@@ -272,7 +284,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-4">Address</div>
                         <div class="col-sm-8">
-                            <textarea class="form-control" name="sAddress" [(ngModel)]="sAddress" id="" cols="30" rows="4"></textarea>
+                            <textarea class="form-control" name="sAddress" [(ngModel)]="stFrom.sAddress" id="" cols="30" rows="4" required></textarea>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -284,7 +296,9 @@
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="registerStudent()">Register</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="registerStudent()"
+                      *ngIf="studentRegisterForm.valid">Register</button>
+
                   </div>
               </form>
             </div>
